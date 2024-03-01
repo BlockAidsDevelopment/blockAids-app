@@ -1,0 +1,539 @@
+@import '../../../styles/variables';
+@import '../../../styles/fonts';
+
+.tasks-area {
+  margin-top: 40px;
+  border-radius: 8px;
+  border: 1px solid $black1;
+  background-color: $black0;
+  padding: 40px 0;
+  box-shadow: 0px 8px 24px -4px rgba(173, 176, 184, 0.08), 0px 6px 12px -6px rgba(173, 176, 184, 0.12);
+
+  .tasks-title {
+    display: flex;
+    padding: 18px 32px;
+    justify-content: space-between;
+
+    h3 {
+      color: $black5;
+      font-family: Satoshi-Bold, serif;
+      font-size: 26px;
+    }
+
+    a {
+      color: $blue3;
+      font-family: Satoshi-Medium, serif;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      margin-left: 8px;
+    }
+  }
+
+  .tasks-head {
+    display: flex;
+    justify-content: space-between;
+    background-color: $blue1;
+    padding: 16px 32px;
+
+    .tasks-head-item {
+      display: flex;
+      align-items: center;
+      font-family: 'Satoshi-Bold', serif;
+      font-size: 16px;
+    }
+  }
+
+  .tasks-body {
+    display: flex;
+    justify-content: space-between;
+    background-color: $black0;
+    border-bottom: 1px solid $black1;
+    padding: 16px 32px;
+
+    .tasks-body-item {
+      display: flex;
+      align-items: center;
+      color: $black3;
+      font-size: 16px;
+
+      .avatar {
+        margin-right: 20px;
+      }
+
+      .details {
+        cursor: pointer;
+        position: relative;
+        text-align: right;
+        width: 100%;
+        justify-content: right;
+        -webkit-transform: translateZ(0); /* webkit flicker fix */
+        -webkit-font-smoothing: antialiased; /* webkit text rendering fix */
+      }
+    }
+  }
+
+  .lg {
+    //width: 26% !important;
+    width: 280px !important;
+  }
+
+  .md {
+    //width: 22% !important;
+    width: 230px !important;
+  }
+
+  .sm {
+    //width: 15% !important;
+    width: 130px !important;
+  }
+
+  .xs {
+    //width: 5% !important;
+    width: 60px !important;
+  }
+}
+
+.tasks-top-options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-left: 32px;
+  align-items: center;
+
+  .tasks-filter {
+    display: flex;
+
+    .filter-option {
+      border-radius: 8px;
+      padding: 5px 9px;
+      border: 1px solid $blue3;
+      margin-right: 8px;
+      color: $blue3;
+      font-size: 14px;
+      cursor: pointer;
+
+      span {
+        background-color: $blue3;
+        color: $blue0;
+        padding: 3px 8px;
+        border-radius: 50%;
+        font-size: 10px;
+      }
+
+      &:hover {
+        background-color: $blue3;
+        color: $blue0;
+
+        span {
+          color: $blue3;
+          background-color: $blue0;
+        }
+      }
+    }
+
+    .active-option {
+      background-color: $blue3;
+      color: $blue0;
+
+      span {
+        color: $blue3;
+        background-color: $blue0;
+      }
+    }
+  }
+
+  .tasks-calendar {
+    margin-right: 32px;
+
+    p {
+      color: $black3;
+      font-family: 'Satoshi-Bold', serif;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 2px;
+        bottom: -3px;
+        left: 2px;
+        background-color: $black3;
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+      }
+
+      &:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+
+      .icon {
+        background-image: url("../assets/calendar-icon.png");
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.tasks-dialog {
+  .MuiPaper-root {
+    background-color: $blue1;
+  }
+
+  .flex-space-between {
+    display: flex;
+    justify-content: space-between;
+
+    .MuiSvgIcon-root {
+      cursor: pointer;
+    }
+  }
+
+}
+
+.task-options {
+  margin-top: 40px;
+
+  .add-new-task-btn {
+    background-color: $blue3;
+    padding: 16px 32px;
+    border-radius: 8px;
+    color: $blue1;
+    font-size: 1.1rem;
+    font-family: 'Satoshi-Bold', serif;
+    display: flex;
+    cursor: pointer;
+
+    .icon {
+      background-image: url("../assets/addNewTaskBtnIcon.png");
+      margin-right: 8px;
+    }
+
+    &:hover {
+      background-color: $blue4;
+    }
+  }
+}
+
+.task-create-area {
+  padding: 0 24px;
+}
+
+.tasks-view-area {
+  padding: 0 24px;
+
+  h1 {
+    color: $black5;
+    font-family: Satoshi-Bold, serif;
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    color: $black4;
+    font-family: Satoshi-Bold, serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: $black3;
+    font-family: Satoshi-Medium, serif;
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .task-options {
+    .task-option {
+      margin-bottom: 40px;
+
+      .option-label {
+        display: flex;
+        align-items: center;
+        color: $black3;
+        margin-bottom: 17px;
+
+        .icon {
+          margin-right: 8px;
+        }
+      }
+
+      .option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 17px;
+        color: $black5;
+
+        b {
+          color: $black5;
+          font-family: Satoshi-Bold, serif;
+        }
+
+        .avatar {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1279px) {
+  .badge {
+    padding: 6px 16px !important;
+    font-size: 13px;
+  }
+  .tasks-area {
+    .tasks-head {
+      display: none;
+    }
+
+    .tasks-title {
+      padding: 18px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .tasks-body-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 1%;
+    }
+
+    .tasks-body {
+      border-radius: 8px;
+      flex: 0 calc(50% - 16px);
+      flex-basis: 48%;
+      flex-direction: column;
+      padding: 16px;
+      background-color: $blue1;
+      box-shadow: 0px 8px 24px -4px rgba(173, 176, 184, 0.08), 0px 6px 12px -6px rgba(173, 176, 184, 0.12);
+      margin: 1%;
+
+      .tasks-body-item .details {
+        height: 21px;
+
+        button {
+          padding: 0;
+        }
+      }
+
+      .task-top-mobile {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0;
+        border-bottom: 1px solid $black1;
+        padding-bottom: 32px;
+
+        .avatar-area {
+          margin-right: 16px;
+        }
+
+        .info-area {
+          flex-grow: 1;
+          flex-direction: column;
+        }
+
+        .options-area {
+          display: flex;
+        }
+
+        .tasks-item-name {
+          color: $black5;
+        }
+
+        .options-area {
+          align-content: center;
+          display: flex;
+        }
+
+        .tasks-item-organization {
+          color: $black3;
+          font-size: 14px;
+        }
+
+        .tasks-item-points {
+          color: $black5;
+          font-family: Satoshi-Medium, serif;
+          font-size: 16px;
+          margin-right: 16px;
+        }
+      }
+
+      .task-bottom-mobile {
+        padding-top: 16px;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 10px;
+
+        div {
+          color: $black4;
+          font-family: Satoshi-Bold, serif;
+          font-size: 12px;
+          background-repeat: no-repeat;
+          background-position: 0 center;
+          display: flex;
+          align-items: center;
+        }
+
+        .tasks-item-date {
+          background-image: url("../assets/calendar.svg");
+          padding-left: 30px;
+        }
+
+        .tasks-item-time {
+          background-image: url("../assets/clock.png");
+          padding-left: 30px;
+
+        }
+      }
+    }
+  }
+}
+
+.display-flex {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+@media only screen and (max-width: 768px) {
+  .tasks-area {
+    margin-top: 24px;
+    border: 0;
+    box-shadow: none;
+    padding: 20px 0;
+
+    .tasks-body-wrapper {
+      padding: 0;
+    }
+
+    .tasks-body {
+      flex-basis: 100%;
+      margin: 0 0 16px 0;
+    }
+  }
+  .tasks-top-options {
+    padding-left: 0;
+    justify-content: center;
+
+    .tasks-filter {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: space-around;
+
+      .filter-option {
+        padding: 5px 20px;
+        font-size: 12px;
+        margin-bottom: 13px;
+        text-align: center;
+      }
+    }
+  }
+
+  .tasks-view-area {
+    padding: 0;
+  }
+
+  .task-create-area {
+    padding: 0;
+  }
+
+  .tooltip-background {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+  }
+  .task-options {
+    background-color: #FFF;
+    margin-top: 0;
+    text-align: center;
+
+    .tasks-calendar {
+      margin-top: 30px;
+
+      .MuiButtonBase-root {
+        width: 100%;
+        height: 56px;
+        border: 2px solid $blue3;
+        border-radius: 8px;
+      }
+    }
+
+    .task-option {
+      display: flex;
+
+      .option-label {
+        width: 50%;
+      }
+
+      .option {
+        width: 50%;
+
+        b {
+          width: 100%;
+        }
+      }
+
+      .option-block {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    a {
+      width: 100%;
+    }
+
+    .add-new-task-btn {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+}
+
+.context-link {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 10px;
+  }
+}
+
+.badge {
+  padding: 8px 16px;
+  border-radius: 16px;
+  text-align: center;
+  width: 115px;
+}
+
+.badge-undone {
+  background-color: $red15;
+  color: $red3;
+}
+
+.badge-done {
+  background-color: $green15;
+  color: $green3;
+}
+
+.badge-overdue {
+  background-color: $orange0;
+  color: $orange3;
+}
+
+.badge-progress {
+  background-color: $blue15;
+  color: $blue3;
+}
+

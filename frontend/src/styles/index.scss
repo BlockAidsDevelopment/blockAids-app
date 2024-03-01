@@ -1,0 +1,450 @@
+@import 'resets';
+@import 'fonts';
+@import 'variables';
+
+body {
+  margin: 0;
+  font-family: 'Satoshi-Medium', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $black0;
+}
+
+* {
+  font-family: 'Satoshi-Medium', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  transition: all 0.2s ease-in-out;
+}
+
+.desktop-device {
+  display: flex !important;
+}
+
+.mobile-device {
+  display: none !important;
+}
+
+.notifications-bar {
+  text-align: center;
+  width: 100%;
+  background-color: $blue4;
+  color: #FFF;
+  padding: 10px 20px;
+}
+
+.wrapper {
+  max-width: 1920px;
+  margin: auto;
+  display: flex;
+  padding: 0 15px;
+
+  .sidebar-area {
+    width: 290px !important;
+    flex-shrink: 0;
+    margin-right: 20px;
+  }
+
+  .main-area {
+    flex-shrink: 1;
+    flex-grow: 1;
+  }
+
+  .content-area {
+    background-color: #F6FEFE;
+    box-shadow: 0px 8px 24px -4px rgba(173, 176, 184, 0.08), 0px 6px 12px -6px rgba(173, 176, 184, 0.12);
+    padding: 40px 24px;
+    min-height: 92vh;
+  }
+}
+
+.icon {
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.standard-input {
+  width: 100%;
+  border: 1px solid $blue2;
+  height: 48px;
+  padding: 12px 16px 12px 56px;
+  border-radius: 8px 0 0 8px;
+  background-color: $blue1;
+  background-repeat: no-repeat;
+  background-position: 16px 12px;
+  background-size: 24px 24px;
+
+  &::placeholder {
+    color: $black3;
+    opacity: 1;
+    font-family: 'Satoshi-Light', serif;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: inherit;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px $blue1;
+}
+
+.standard-select {
+  width: 100%;
+  border-radius: 8px 0 0 8px !important;
+  border: 1px solid $blue2;
+  background-color: $blue1;
+  padding-left: 32px;
+  background-repeat: no-repeat;
+  background-position: 8px center;
+  background-size: 24px 24px;
+  margin: 0 0 32px 0;
+
+  em {
+    color: $black3;
+    font-size: 16px;
+    font-family: 'Satoshi-Light', serif;
+  }
+}
+
+.MuiInputBase-input {
+  display: flex !important;
+}
+
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border-color: transparent !important;
+}
+
+.standard-date-picker {
+  width: 100%;
+  height: 58.5px;
+  border-radius: 8px;
+  border: 1px solid $blue2;
+  background-color: $blue1;
+  padding-left: 42px;
+  background-repeat: no-repeat;
+  background-position: 8px center;
+  background-size: 24px 24px;
+  margin: 0 0 32px 0;
+  background-image: url("../ui/assets/dateDueTaskIcon.svg");
+
+  &::placeholder {
+    color: $black2;
+  }
+
+  svg {
+    color: $blue3;
+  }
+}
+
+.standard-textarea {
+  width: 100%;
+  min-height: 112px;
+  border: 1px solid $blue3;
+  border-radius: 8px;
+  padding: 15px;
+  color: $black5;
+}
+
+.standard-label {
+  color: $black5 !important;
+  font-family: Satoshi-Light, serif !important;
+  font-size: 16px !important;
+  line-height: normal !important;
+  margin-bottom: 8px !important;
+  display: flex !important;
+}
+
+.standard-button {
+  cursor: pointer;
+  border-radius: 8px;
+  background: $blue3;
+  border: 2px solid $blue3;
+  color: $blue1;
+  padding: 14px 62px;
+  font-size: 18px;
+  font-family: 'Satoshi-Bold', serif;
+
+  &:hover {
+    background: $black0;
+    color: $blue3;
+  }
+}
+
+.standard-upload-btn {
+  border-radius: 8px !important;
+  background: $blue3 !important;
+  border: 2px solid $blue3 !important;
+  color: $blue1 !important;
+  padding: 8px 20px !important;
+  font-size: 1rem !important;
+  font-family: 'Satoshi-Bold', serif !important;
+
+  &:hover {
+    background: $black0 !important;
+    color: $blue3 !important;
+  }
+}
+
+.btn-outlined {
+  cursor: pointer;
+  border-radius: 8px;
+  background: $black0;
+  border: 2px solid $blue3;
+  color: $blue3;
+  padding: 14px 62px;
+  font-size: 18px;
+  font-family: 'Satoshi-Bold', serif;
+
+  &:hover {
+    background: $blue3;
+    color: $black0;
+  }
+}
+
+.btn-sm {
+  cursor: pointer;
+  border-radius: 8px;
+  background: $blue3;
+  border: 2px solid $blue3;
+  color: $black0;
+  padding: 8px 32px;
+  font-size: 14px;
+  font-family: 'Satoshi-Bold', serif;
+
+  &:hover {
+    background: $black0;
+    color: $blue3;
+  }
+}
+
+.btn-outlined-sm {
+  cursor: pointer;
+  border-radius: 8px;
+  background: $black0;
+  border: 2px solid $blue3;
+  color: $blue3;
+  padding: 8px 32px;
+  font-size: 14px;
+  font-family: 'Satoshi-Bold', serif;
+
+  &:hover {
+    background: $blue3;
+    color: $black0;
+  }
+}
+
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root {
+  color: $blue3 !important;
+}
+
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked {
+  color: $blue3 !important;
+}
+
+.mobile-header {
+  display: none;
+}
+
+@media only screen and (max-width: 1279px) {
+  .desktop-device {
+    display: none !important;
+  }
+  .mobile-device {
+    display: flex !important;
+  }
+
+  .menu-burgher {
+    position: absolute;
+    left: 10px;
+    top: 33px;
+  }
+
+  #root {
+    background-color: $blue0;
+  }
+  .wrapper {
+    flex-direction: column;
+
+    .content-area {
+      box-shadow: none;
+      padding: 0;
+    }
+  }
+  .mobile-header {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+    width: 100%;
+  }
+  .bottom-bar {
+    display: none;
+  }
+
+  .tablet-bar-view {
+    display: block !important;
+  }
+
+  .mobile-bar-view {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #root {
+    background-color: #FFF;
+  }
+  .content-area {
+    background-color: #FFF !important;
+  }
+
+  .standard-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .tablet-bar-view {
+    display: none !important;
+  }
+
+  .mobile-bar-view {
+    display: block !important;
+
+    .icon {
+      display: block;
+      margin: 5px auto;
+    }
+  }
+
+  .menu-burgher {
+    display: none;
+  }
+
+  .bottom-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid $black1;
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
+    background-color: #FFF;
+
+    div {
+      color: $black3;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .bar-item {
+      width: 25%;
+      text-align: center;
+      padding: 16px 0 24px 0;
+      cursor: pointer;
+
+      .icon {
+        display: block;
+        margin: 5px auto;
+      }
+    }
+  }
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.margin-0 {
+  margin: 0 !important;
+}
+
+.span-link {
+  color: $black3;
+  cursor: pointer;
+}
+
+.alert-area {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+
+  .box {
+    --Size: 40px;
+    display: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+    width: var(--Size);
+    height: var(--Size);
+    background: $blue3;
+    border-radius: 50%;
+    animation: 1s showAlert linear infinite;
+    animation-delay: 0.1s;
+  }
+
+  .box > * {
+    opacity: 0;
+    animation: 1s tick linear infinite;
+    animation-delay: 0.1s;
+  }
+
+  @keyframes showAlert {
+    20% {
+      border-radius: 100%;
+      transform: scale(.4);
+      box-shadow: 0 0 0 0 rgba(#77F6D5, .2);
+    }
+
+    40% {
+      transform: scale(1.2);
+    }
+
+    50% {
+      transform: scale(1);
+      box-shadow: 0 0 0 40px rgba(#77F6D5, .2);
+    }
+
+    70% {
+      border-radius: 100%;
+      box-shadow: 0 0 0 90px rgba(#77F6D5, 0);
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes tick {
+    0%,
+    25% {
+      opacity: 0;
+    }
+
+    50%,
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+.error-area {
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 10px;
+  color: $red4;
+  font-size: 15px;
+  font-family: Satoshi-Medium, serif;
+  background-color: rgba(246, 44, 48, 0.3);
+}
