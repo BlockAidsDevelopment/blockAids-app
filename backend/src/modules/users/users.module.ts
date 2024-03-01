@@ -1,24 +1,16 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
-import { User } from './models/user.model';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { Category } from '../categories/models/categories.model';
-import { Project } from '../projects/models/projects.model';
-import { AuthModule } from '../auth/auth.module';
-import { FilesModule } from '../../common/files/files.module';
-import { ProjectsModule } from '../projects/projects.module';
-import { UsersAuhService } from './users-auh.service';
+import { Module } from "@nestjs/common";
+import { CrudUsersService } from "./services/crud-users.service";
+import { UsersController } from "./users.controller";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { User } from "./entities/user.entity";
+import { FilesService } from "../../common/files/files.service";
+import { ValidationUsersService } from "./services/validation-users.service";
 
 @Module({
+  imports: [TypeOrmModule.forFeature([User])],
   controllers: [UsersController],
-  providers: [UsersService, UsersAuhService],
-  imports: [
-    SequelizeModule.forFeature([User, Project, Category]),
-    forwardRef(() => AuthModule),
-    FilesModule,
-    forwardRef(() => ProjectsModule),
-  ],
-  exports: [UsersService],
+  providers: [CrudUsersService, ValidationUsersService, FilesService],
+  exports: [CrudUsersService, ValidationUsersService],
 })
-export class UsersModule {}
+export class UsersModule {
+}

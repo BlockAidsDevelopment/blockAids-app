@@ -1,52 +1,43 @@
-import { Model } from 'sequelize';
+import { Injectable } from "@nestjs/common";
+import { ApiProperty } from "@nestjs/swagger";
+import { UserGenderEnum } from "../enums/user-gender.enum";
 
+@Injectable()
 export class UsersResource {
+  @ApiProperty({ example: 1 })
   public id: number;
-  public expertId: number;
-  public cookie: string;
+  @ApiProperty({ example: "John Smith" })
   public name: string;
+  @ApiProperty({ example: "johny@gmail.com" })
   public email: string;
+  @ApiProperty({ example: "+3736091232" })
   public phone: string;
-  public available: boolean;
+  @ApiProperty({ example: "2gCr6A9bk7rfXqwwBsW1PB63Yh19perTjH7y5yvKCYHN" })
+  public public_key: string;
+  @ApiProperty({ example: "johny-avatar.png" })
   public avatar: string;
-  public duration: string;
-  public path: string;
-  public calls: number;
-  public expert: object;
-  public lastEntry: string;
-  public createdAt: string;
-  public updatedAt: string;
+  @ApiProperty({ example: "https://avatars.githubusercontent.com/u/36919907" })
+  public avatar_link: string;
+  @ApiProperty({ example: UserGenderEnum.male })
+  public gender: string;
+  @ApiProperty({ example: "1990-07-10" })
+  public birthdate: Date | null;
 
   public constructor(user) {
-    const createdDate = new Date(user.created_at);
-    const updatedDate = new Date(user.updated_at);
-
     this.id = user.id;
-    this.expertId = user.expert_id;
-    this.cookie = user.cookie;
     this.name = user.name;
     this.email = user.email;
     this.phone = user.phone;
-    this.available = user.available;
-    this.avatar = user.avatar ? process.env.BASE_URL + user.avatar: null;
-    this.duration = user.duration;
-    this.path = user.path;
-    this.calls = user.calls;
-    this.lastEntry = user.last_entry;
-    this.createdAt = createdDate.toDateString();
-    this.updatedAt = updatedDate.toDateString();
+    this.public_key = user.public_key;
+    this.avatar = user.avatar;
+    this.avatar_link = user.avatar_link;
+    this.gender = user.gender;
+    this.birthdate = user.birthdate;
   }
 
-  public static collect(model: Model[], meta: Record<any, any>) {
-    if (model) {
-      const data = {};
-      data['data'] = model.map((item) => {
-        return new UsersResource(item);
-      });
-      if (meta) {
-        data['meta'] = meta;
-      }
-      return data;
-    }
+  public static collect(users): UsersResource[] {
+    return users.map((user) => {
+      return new UsersResource(user);
+    });
   }
 }

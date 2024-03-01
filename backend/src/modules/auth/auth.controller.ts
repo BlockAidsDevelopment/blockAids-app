@@ -1,37 +1,32 @@
 import {
   Body,
   Controller,
-  UsePipes,
   Post,
+  UsePipes,
   ValidationPipe,
-} from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthService } from './auth.service';
-import { ProjectWithAdminDto } from './dto/project-with-admin.dto';
-import { LoginDto } from './dto/login.dto';
-import { AuthResource } from './resources/auth.resource';
+} from "@nestjs/common";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { AuthService } from "./auth.service";
+import { RegisterAuthDto } from "./dto/register-auth.dto";
+import { LoginAuthDto } from "./dto/login-auth.dto";
 
-@ApiTags('Projects')
-@Controller('api')
+@ApiTags("Auth")
+@Controller("api/auth")
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @ApiOperation({ summary: 'Create Project and Administrator' })
-  @ApiResponse({ status: 201, description: 'Application Token' })
+  @ApiOperation({ summary: "Register new user/specialist" })
+  @ApiResponse({ status: 200, description: "Application Token" })
   @UsePipes(ValidationPipe)
-  @Post('/register')
-  public async register(
-    @Body() projectWithAdminDto: ProjectWithAdminDto,
-  ): Promise<AuthResource> {
-    const data = await this.authService.register(projectWithAdminDto);
-    return new AuthResource(data);
+  @Post("/register")
+  public async register(@Body() registerAuthDto: RegisterAuthDto) {
+    return await this.authService.register(registerAuthDto);
   }
 
-  @ApiOperation({ summary: 'Get Application Token' })
-  @ApiResponse({ status: 201, description: 'Application Token' })
-  @Post('/login')
-  public async login(@Body() loginDto: LoginDto): Promise<AuthResource> {
-    const data = await this.authService.login(loginDto);
-    return new AuthResource(data);
+  @ApiOperation({ summary: "Login user/specialist" })
+  @ApiResponse({ status: 201, description: "Application Token" })
+  @Post("/login")
+  public async login(@Body() loginAuthDto: LoginAuthDto): Promise<object> {
+    return await this.authService.login(loginAuthDto);
   }
 }

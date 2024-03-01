@@ -1,35 +1,24 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { ExpertsModule } from '../experts/experts.module';
-import { JwtModule } from '@nestjs/jwt';
-import { ProjectsModule } from '../projects/projects.module';
-import { AuthGuard } from './guards/auth.guard';
-import { AdministratorGuard } from './guards/administrator.guard';
-import { ClientGuard } from './guards/client.guard';
-import { SetupGuard } from './guards/setup.guard';
-import { LanguagesModule } from '../languages/languages.module';
+import {forwardRef, Module} from "@nestjs/common";
+import {AuthController} from "./auth.controller";
+import {AuthService} from "./auth.service";
+import {JwtModule} from "@nestjs/jwt";
+import {UsersModule} from "../users/users.module";
+import {Specialist} from "../specialists/entities/specialist.entity";
+import {SpecialistsModule} from "../specialists/specialists.module";
 
 @Module({
-  providers: [
-    AuthService,
-    AuthGuard,
-    AdministratorGuard,
-    ClientGuard,
-    SetupGuard,
-  ],
-  controllers: [AuthController],
   imports: [
-    forwardRef(() => ProjectsModule),
-    forwardRef(() => ExpertsModule),
-    forwardRef(() => LanguagesModule),
+    forwardRef(() => UsersModule),
+    forwardRef(() => SpecialistsModule),
     JwtModule.register({
-      secret: process.env.PRIVATE_KEY || 'talkEarn-secret',
+      secret: process.env.PRIVATE_KEY || "blockaids-secret",
       signOptions: {
-        expiresIn: '24h',
+        expiresIn: "24h",
       },
     }),
   ],
-  exports: [AuthModule, JwtModule],
+  controllers: [AuthController],
+  providers: [AuthService, JwtModule],
 })
-export class AuthModule {}
+export class AuthModule {
+}

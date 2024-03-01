@@ -1,19 +1,13 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { SupervisorsService } from './services/supervisors.service';
-import { SupervisorsController } from './controllers/supervisors.controller';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { SupervisorNotifications } from './models/supervisor-notifications.model';
-import { AuthModule } from '../auth/auth.module';
-import { LanguagesModule } from '../languages/languages.module';
-import { Expert } from '../experts/models/experts.model';
+import { Module } from "@nestjs/common";
+import { CrudNotificationsService } from "./services/crud-notifications.service";
+import { NotificationsController } from "./notifications.controller";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Notification } from "./entities/notification.entity";
 
 @Module({
-  providers: [SupervisorsService],
-  controllers: [SupervisorsController],
-  imports: [
-    SequelizeModule.forFeature([SupervisorNotifications, Expert]),
-    forwardRef(() => AuthModule),
-    forwardRef(() => LanguagesModule),
-  ],
+  imports: [TypeOrmModule.forFeature([Notification])],
+  controllers: [NotificationsController],
+  providers: [CrudNotificationsService],
 })
-export class NotificationsModule {}
+export class NotificationsModule {
+}

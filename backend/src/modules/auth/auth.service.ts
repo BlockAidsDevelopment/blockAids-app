@@ -1,116 +1,145 @@
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-  UnauthorizedException,
-} from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
-import { JwtService } from '@nestjs/jwt';
-import { ExpertsService } from '../experts/experts.service';
-import { Expert } from '../experts/models/experts.model';
-import { ProjectsService } from '../projects/projects.service';
-import { ProjectWithAdminDto } from './dto/project-with-admin.dto';
-import { LoginDto } from './dto/login.dto';
-import { Types } from '../experts/enums/types.enum';
-import { LanguagesService } from '../languages/languages.service';
-import { AuthGuard } from './guards/auth.guard';
-import { GlobalData } from './guards/global-data';
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import * as bcrypt from "bcryptjs";
+import { RegisterAuthDto } from "./dto/register-auth.dto";
+import { AuthTypeEnum } from "./enums/auth-type.enum";
+import { CrudUsersService } from "../users/services/crud-users.service";
+import { CrudSpecialistsService } from "../specialists/services/crud-specialists.service";
+import { UserGenderEnum } from "../users/enums/user-gender.enum";
+import { User } from "../users/entities/user.entity";
+import { Specialist } from "../specialists/entities/specialist.entity";
+import { JwtService } from "@nestjs/jwt";
+import { LoginAuthDto } from "./dto/login-auth.dto";
+import { ValidationSpecialistsService } from "../specialists/services/validation-specialists.service";
+import { ValidationUsersService } from "../users/services/validation-users.service";
+import { SpecialistsResource } from "../specialists/resources/specialists.resource";
+import { UsersResource } from "../users/resources/users.resource";
 
 @Injectable()
 export class AuthService {
   constructor(
-    private projectService: ProjectsService,
-    private expertService: ExpertsService,
-    private languageService: LanguagesService,
     private jwtService: JwtService,
-  ) {}
-
-  public async login(expertDto: LoginDto): Promise<object> {
-    const expert = await this.validate(expertDto);
-    const token = await this.generateToken(expert);
-    const project = await this.projectService.getById(expert.project_id);
-    return { ...token, expert, project };
+    private readonly crudUsersService: CrudUsersService,
+    private readonly validationUsersService: ValidationUsersService,
+    private readonly crudSpecialistsService: CrudSpecialistsService,
+    private readonly validationSpecialistsService: ValidationSpecialistsService,
+  ) {
   }
 
-  public async register(
-    projectWithAdminDto: ProjectWithAdminDto,
-  ): Promise<object> {
-    const administrator = projectWithAdminDto.administrator;
-    const password = administrator.password;
-    delete projectWithAdminDto.administrator;
-
-    await this.validateProject(projectWithAdminDto.name);
-
-    const project = await this.projectService.create(projectWithAdminDto);
-    AuthGuard.projectId = project.id;
-    const language = await this.languageService.store(
-      projectWithAdminDto.language,
-      '',
-    );
-
-    GlobalData.langId = language.id;
-    GlobalData.languages = [language];
-
-    const hashPassword = await bcrypt.hash(password, 5);
-
-    const expert = await this.expertService.partialStore({
-      ...administrator,
-      slug: '',
-      password: hashPassword,
-      project_id: project.id,
-      type: Types.Administrator,
+  async login(loginAuthDto: LoginAuthDto) {
+    if (loginAuthDto.type === AuthTypeEnum.specialist) {
+      const specialist = await this.checkSpecialist(loginAuthDto);
+      const token = this.generateToken(specialist, loginAuthDto.type);
+      const specialistResource = new SpecialistsResource(specialist);
+      return { token, type: "specialist", specialist: specialistResource };
+    }
+    if (loginAuthDto.type === AuthTypeEnum.user) {
+      const user = await this.checkUser(loginAuthDto);
+      const token = this.generateToken(user, loginAuthDto.type);
+      const userResource = new UsersResource(user);
+      return { token, type: "user", user: userResource };
+    }
+    throw new UnauthorizedException({
+      message: "Login type filed.",
     });
-
-    const token = await this.generateToken(expert);
-
-    return { ...token, expert, project };
   }
 
-  private generateToken(expert: Expert): object {
+  async register(registerAuthDto: RegisterAuthDto): Promise<object> {
+    let token = null;
+
+    if (registerAuthDto.type === AuthTypeEnum.specialist) {
+      await this.validationSpecialistsService.validateEmail(
+        registerAuthDto.email,
+      );
+      const specialist = await this.crudSpecialistsService.create(
+        {
+          ...registerAuthDto,
+          avatar: "avatar-mock.png",
+          job_position: null,
+          organizationId: registerAuthDto.organizationId,
+        },
+        null,
+      );
+      token = this.generateToken(specialist, registerAuthDto.type);
+      const specialistResource = new SpecialistsResource(specialist);
+      return { token, type: "specialist", specialist: specialistResource };
+    }
+    if (registerAuthDto.type === AuthTypeEnum.user) {
+      await this.validationUsersService.validateEmail(registerAuthDto.email);
+      const user = await this.crudUsersService.createUser(
+        {
+          name: registerAuthDto.name,
+          email: registerAuthDto.email,
+          password: registerAuthDto.password,
+          public_key: null,
+          phone: null,
+          birthdate: null,
+          avatar: "avatar-mock.png",
+          avatar_link: "https://avatars.githubusercontent.com/u/36919907",
+          gender: UserGenderEnum.other,
+        },
+        null,
+      );
+      token = this.generateToken(user, registerAuthDto.type);
+      const userResource = new UsersResource(user);
+      return { token, type: "user", user: userResource };
+    }
+
+    throw new UnauthorizedException({
+      message: "Register type filed.",
+    });
+  }
+
+  private generateToken(entity: User | Specialist, type: string): string {
     const payload = {
-      email: expert.email,
-      id: expert.id,
-      projectId: expert.project_id,
-      // name: expert.translation.name,
-      type: expert.type,
+      email: entity.email,
+      name: entity.name,
+      id: entity.id,
+      type,
     };
-    return {
-      token: this.jwtService.sign(payload),
-    };
+    return this.jwtService.sign(payload);
   }
 
-  private async validate(expertDto: LoginDto): Promise<Expert> {
-    const expert = await this.expertService.findByEmail(expertDto.email);
+  private async checkUser(loginAuthDto: LoginAuthDto) {
+    const user = await this.crudUsersService.findByEmail(loginAuthDto.email);
 
-    if (!expert) {
+    if (!user) {
       throw new UnauthorizedException({
-        message: 'Email is incorrect',
+        message: "Email is incorrect",
       });
     }
 
     const passwordsEquals = await bcrypt.compare(
-      expertDto.password,
-      expert.password,
+      loginAuthDto.password,
+      user.password,
     );
 
-    if (expert && passwordsEquals) {
-      return expert;
-      // return await this.expertService.findById(expert.id);
-    }
+    if (user && passwordsEquals) return user;
 
     throw new UnauthorizedException({
-      message: 'Email or password is incorrect',
+      message: "Email or password is incorrect",
     });
   }
 
-  private async validateProject(projectName: string): Promise<void> {
-    const projectExists = await this.projectService.getByName(projectName);
+  private async checkSpecialist(loginAuthDto: LoginAuthDto) {
+    const specialist = await this.crudSpecialistsService.findByEmail(
+      loginAuthDto.email,
+    );
 
-    if (projectExists) {
-      throw new HttpException(
-        'Project name already exists',
-        HttpStatus.BAD_REQUEST,
-      );
+    if (!specialist) {
+      throw new UnauthorizedException({
+        message: "Email is incorrect",
+      });
     }
+
+    const passwordsEquals = await bcrypt.compare(
+      loginAuthDto.password,
+      specialist.password,
+    );
+
+    if (specialist && passwordsEquals) return specialist;
+
+    throw new UnauthorizedException({
+      message: "Email or password is incorrect",
+    });
   }
 }
