@@ -11,6 +11,7 @@ import Tasks from "./pages/Tasks";
 import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
 import Notifications from "./pages/Notifications";
+import MedicalRecords from "./pages/MedicalRecords";
 import SidebarDrawer from "./components/SidebarDrawer";
 import {BrowserView, MobileView} from 'react-device-detect';
 import HomeIcon from './styles/assets/homeIcon.svg';
@@ -80,6 +81,7 @@ const App: FC = () => {
                   <Route path="/tasks/update/:id" element={<TaskUpdate/>}/>
                   <Route path="/profile" element={<Profile/>}/>
                   <Route path="/notifications" element={<Notifications/>}/>
+                  <Route path="/medical-records" element={<MedicalRecords/>}/>
                 </Route>
                 <Route element={<GuestGuard/>}>
                   <Route path="/auth" element={<Auth/>}/>
