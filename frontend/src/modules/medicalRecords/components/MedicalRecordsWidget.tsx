@@ -14,7 +14,7 @@ const MedicalRecordsWidget: FC = () => {
       </div>
 
       <div className="medical-record">
-        <div>CD4 level</div>
+        <div>CD4 cell level</div>
         <div className="icon-contained"><Brightness1Icon color="error"/> 56</div>
         <div>117</div>
         <div>Dr. Brew</div>
@@ -22,7 +22,7 @@ const MedicalRecordsWidget: FC = () => {
         <div className="medical-record-date">Wed Mar 06 2024</div>
       </div>
       <div className="medical-record">
-        <div>CD3 level</div>
+        <div>CD4 cell level</div>
         <div className="icon-contained"><Brightness1Icon color="success"/> 115</div>
         <div> 117</div>
         <div>Dr. Brew</div>
@@ -30,7 +30,7 @@ const MedicalRecordsWidget: FC = () => {
         <div className="medical-record-date">Wed Mar 06 2024</div>
       </div>
       <div className="medical-record">
-        <div>CD5 level</div>
+        <div>CD4 cell level</div>
         <div className="icon-contained"><Brightness1Icon color="info"/> 99</div>
         <div> 117</div>
         <div>Dr. Brew</div>
@@ -38,7 +38,7 @@ const MedicalRecordsWidget: FC = () => {
         <div className="medical-record-date">Wed Mar 06 2024</div>
       </div>
       <div className="medical-record">
-        <div>CD10 level</div>
+        <div>CD4 cell level</div>
         <div className="icon-contained"><Brightness1Icon color="secondary"/> 200</div>
         <div> 117</div>
         <div>Dr. Brew</div>
