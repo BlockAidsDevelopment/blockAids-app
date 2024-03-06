@@ -18,6 +18,8 @@ import { TaskType } from "./modules/tasks/entities/task-type.entity";
 import { Task } from "./modules/tasks/entities/task.entity";
 import { AuthModule } from "./modules/auth/auth.module";
 import { BlockchainModule } from "./modules/blockchain/blockchain.module";
+import { MedicalRecords } from "./modules/tasks/entities/medical-record.entity";
+import { MedicalRecordIndex } from "./modules/tasks/entities/medical-record-index.entity";
 
 @Module({
   imports: [
@@ -31,7 +33,16 @@ import { BlockchainModule } from "./modules/blockchain/blockchain.module";
       port: Number(process.env.DB_PORT),
       password: process.env.DB_PASSWORD,
       username: process.env.DB_USERNAME,
-      entities: [User, Organization, Specialist, Notification, TaskType, Task],
+      entities: [
+        User,
+        Organization,
+        Specialist,
+        Notification,
+        TaskType,
+        Task,
+        MedicalRecords,
+        MedicalRecordIndex,
+      ],
       database: process.env.DB_DATABASE,
       synchronize: true,
       logging: true,
@@ -51,5 +62,4 @@ import { BlockchainModule } from "./modules/blockchain/blockchain.module";
   controllers: [],
   providers: [],
 })
-export class AppModule {
-}
+export class AppModule {}

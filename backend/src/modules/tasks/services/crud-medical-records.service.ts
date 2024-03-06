@@ -28,7 +28,7 @@ export class CrudMedicalRecordsService {
     });
   }
 
-  findAllByTaskId(taskId: string): Promise<MedicalRecords[]> {
+  findAllByTaskTypeId(taskId: string): Promise<MedicalRecords[]> {
     return this.medicalRecordsRepository.find({
       where: { taskId: taskId.toString() },
       order: { id: "DESC" },
@@ -39,7 +39,7 @@ export class CrudMedicalRecordsService {
     });
   }
 
-  findAllByMedicalRecordsId(
+  findAllByMedicalRecordsIndexId(
     medicalRecordIndexId: string,
   ): Promise<MedicalRecords[]> {
     return this.medicalRecordsRepository.find({
