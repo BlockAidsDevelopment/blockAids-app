@@ -11,6 +11,8 @@ export class MedicalRecordIndexesResource {
   public name: string;
   @ApiProperty({ example: "mm3" })
   public unit: string;
+  @ApiProperty({ example: "text" })
+  public type: string;
   @ApiProperty({ example: TaskTypeResource })
   public taskType: TaskTypeResource;
 
@@ -18,6 +20,7 @@ export class MedicalRecordIndexesResource {
     this.id = medicalRecordIndex.id;
     this.name = medicalRecordIndex.name;
     this.unit = medicalRecordIndex.unit;
+    this.type = medicalRecordIndex.type;
     this.taskType = new TaskTypeResource(medicalRecordIndex.taskType);
   }
 

@@ -37,7 +37,7 @@ export class MedicalRecordIndexesController {
 
   @ApiResponse({ status: 200, type: [MedicalRecordIndexesResource] })
   @ApiOperation({ summary: "Get all medical record indexes by task type id" })
-  @Get("/task-type/:id")
+  @Get("/task-type/:taskTypeId")
   async findAllByTaskType(@Param("taskTypeId") taskTypeId: string) {
     const medicalRecordIndex =
       await this.crudMedicalRecordIndexesService.findAllByTaskTypeId(

@@ -13,18 +13,20 @@
             <argon-alert v-if="alertVisible">
               {{ alert.message }}
             </argon-alert>
-            <form action="" v-if="taskType" @submit.prevent="submitForm" autocomplete="off">
-              <div class="row">
-                <div class="col-md-12">
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <form action="" v-if="taskType" @submit.prevent="submitForm" autocomplete="off">
                   <div class="row mt-1">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <label for="example-text-input" class="form-control-label">Name</label>
                       <argon-input type="text"
                                    name="name"
                                    :value="this.taskType.name"
                                    @input="form.name = $event.target.value"/>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <label for="example-text-input" class="form-control-label">Reward</label>
                       <argon-input type="text"
                                    name="name"
@@ -32,21 +34,32 @@
                                    @input="form.reward = $event.target.value"/>
                     </div>
                   </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="alert" role="alert">
-                    <p class="text-danger" v-for="error in errors" :key="error">
-                      <small>{{ error }}</small>
-                    </p>
+                  <div class="col-md-12">
+                    <div class="alert" role="alert">
+                      <p class="text-danger" v-for="error in errors" :key="error">
+                        <small>{{ error }}</small>
+                      </p>
+                    </div>
                   </div>
-                </div>
+                  <div class="col-md-12 mt-5 d-flex justify-content-center">
+                    <div class="form-group">
+                      <argon-button :fullWidth="true" color="success" variant="gradient">Save</argon-button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div class="col-md-6">
+                <h6 class="text-center">Medical Records:</h6>
                 <div class="col-md-12 mt-5 d-flex justify-content-center">
                   <div class="form-group">
-                    <argon-button :fullWidth="true" color="success" variant="gradient">Save</argon-button>
+                    <MedicalRecordCreate v-if="taskType" :taskType="taskType"/>
                   </div>
                 </div>
+                <MedicalRecordList v-if="taskType" :taskType="taskType"/>
               </div>
-            </form>
+            </div>
+
           </div>
         </div>
       </div>
@@ -59,6 +72,8 @@ import {mapActions, mapGetters} from "vuex";
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 import ArgonAlert from "@/components/ArgonAlert.vue";
+import MedicalRecordCreate from "@/views/TaskTypes/components/MedicalRecordCreate.vue";
+import MedicalRecordList from "@/views/TaskTypes/components/MedicalRecordList.vue";
 
 export default {
   name: "edit-organization",
@@ -66,6 +81,8 @@ export default {
     ArgonAlert,
     ArgonInput,
     ArgonButton,
+    MedicalRecordCreate,
+    MedicalRecordList,
   },
   data() {
     return {
@@ -103,6 +120,7 @@ export default {
     ...mapActions({
       fetchTaskTypeById: 'taskTypes/fetchTaskTypeById',
       editTaskType: 'taskTypes/editTaskType',
+      fetchMedicalRecordsIndexByTaskTypeId: 'medicalRecordIndexes/fetchMedicalRecordsIndexByTaskTypeId',
     }),
     async initData() {
       const id = this.$route.params.id;
@@ -110,6 +128,8 @@ export default {
       this.taskType = response.data;
       this.form.name = this.taskType.name;
       this.form.reward = this.taskType.reward;
+
+      await this.fetchMedicalRecordsIndexByTaskTypeId(id);
     },
     async submitForm() {
       if (this.validateForm()) {
