@@ -13,7 +13,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Create a medical record:</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" @click="hideModal" id="close-btn"></button>
           </div>
           <div class="modal-body">
             <form @submit.prevent="submitForm" autocomplete="off">
@@ -93,7 +93,9 @@ export default {
     },
     hideModal(e) {
       const modal = document.getElementById('modal');
-      if (e.target === modal) {
+      const closeBtn = document.getElementById('close-btn');
+      console.log(e.target)
+      if (e.target === modal || e.target === closeBtn) {
         this.isModalVisible = false;
       }
     },
@@ -145,5 +147,9 @@ export default {
 .flex {
   display: flex;
   align-items: center;
+}
+
+.btn-close {
+  background-color: #6c7a89 !important;
 }
 </style>

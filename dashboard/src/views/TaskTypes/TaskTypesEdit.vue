@@ -16,7 +16,7 @@
 
             <div class="row">
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <form action="" v-if="taskType" @submit.prevent="submitForm" autocomplete="off">
                   <div class="row mt-1">
                     <div class="col-md-12">
@@ -49,9 +49,9 @@
                 </form>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-8">
                 <h6 class="text-center">Medical Records:</h6>
-                <div class="col-md-12 mt-5 d-flex justify-content-center">
+                <div class="col-md-12 mt-1 d-flex justify-content-center">
                   <div class="form-group">
                     <MedicalRecordCreate v-if="taskType" :taskType="taskType"/>
                   </div>

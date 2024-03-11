@@ -76,11 +76,11 @@ export default {
             }
         },
         async removeMedicalRecordsIndex({commit}, id) {
-            if (confirm('Are you sure you want to delete this medical records index?')) {
+            if (confirm('Are you sure you want to delete this index?')) {
                 try {
                     await MedicalRecordIndexesApi.delete(id);
                     const response = await MedicalRecordIndexesApi.getAll();
-                    return commit('setMedicalRecordsIndexes', response.data);
+                    return commit('setMedicalRecordsIndexesForTaskType', response.data);
                 } catch (e) {
                     console.error(e);
                 }

@@ -2,11 +2,15 @@
   <div class="medical-records-list">
     <ul v-if="medicalRecords.length > 0">
       <li v-for="(medicalRecord, key) in medicalRecords" :key="key">
-        <span>{{ key + 1 }}</span>
+        <span v-bind:style="{ flex: 0}">{{ key + 1 }}</span>
         <span><b>{{ medicalRecord.name }}</b></span>
         <span><i>{{ medicalRecord.unit }}</i></span>
         <span><small>{{ medicalRecord.type }}</small></span>
-        <span>delete</span>
+        <span v-bind:style="{ flex: 0}">
+        <a @click.prevent="removeRecord(medicalRecord.id)">
+          <i class="ni ni-fat-remove text-sm opacity-10"></i>
+        </a>
+      </span>
       </li>
     </ul>
   </div>
@@ -36,6 +40,7 @@ export default {
   methods: {
     ...mapActions({
       fetchMedicalRecordsIndexByTaskTypeId: 'medicalRecordIndexes/fetchMedicalRecordsIndexByTaskTypeId',
+      removeRecord: "medicalRecordIndexes/removeMedicalRecordsIndex",
     }),
   }
 }
@@ -51,15 +56,36 @@ export default {
     li {
       border: 1px solid #EEE;
       padding: 15px;
-      margin: 15px;
+      margin: 10px;
       border-radius: 8px;
       display: flex;
       align-items: center;
-      justify-content: space-around;
+      justify-content: space-between;
+
+      &:nth-of-type(odd) {
+        background: #eeeeee;
+      }
+
+      &:nth-of-type(even) {
+        background: #ecf0f1;
+      }
 
       span {
+        height: 30px;
         display: flex;
-        width: 20%;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        flex: 1;
+
+        small {
+          background-color: #5e72e4;
+          color: #FFF;
+          border-radius: 8px;
+          padding: 2px 8px;
+          font-size: 10px;
+        }
+
       }
     }
   }
