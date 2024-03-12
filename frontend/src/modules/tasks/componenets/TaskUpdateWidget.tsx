@@ -21,10 +21,13 @@ import {usersApi} from "../../../api/usersApi";
 import {notificationsApi} from "../../../api/notificationsApi";
 import {buildOrganizations, buildSpecialists, buildTaskTypes, buildUsers} from "../services/dropDowns";
 import {setNotification} from "../services/notifications";
+import {ITask} from "../../../models/ITask";
 
-const TaskUpdateWidget: FC = () => {
-  const {id} = useParams()
-  const {data: task} = tasksApi.useFetchTaskByIdQuery(Number(id));
+interface ITaskUpdateWidget {
+  task: ITask
+}
+
+const TaskUpdateWidget: FC<ITaskUpdateWidget> = ({task}) => {
   const {type} = useAppSelector(state => state.authReducer);
   const [updateTask] = tasksApi.useUpdateTaskMutation();
   const [createNotification] = notificationsApi.useCreateNotificationMutation();

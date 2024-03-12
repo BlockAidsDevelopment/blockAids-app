@@ -7,6 +7,8 @@ import {usersApi} from "../api/usersApi";
 import {authApi} from "../api/authApi";
 import {tasksApi} from "../api/tasksApi";
 import {notificationsApi} from "../api/notificationsApi";
+import {medicalRecordsApi} from "../api/medicalRecordsApi";
+import {medicalRecordIndexesApi} from "../api/medicalRecordIndexesApi";
 
 const rootReducer = combineReducers({
   authReducer,
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
   [usersApi.reducerPath]: usersApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
   [notificationsApi.reducerPath]: notificationsApi.reducer,
+  [medicalRecordsApi.reducerPath]: medicalRecordsApi.reducer,
+  [medicalRecordIndexesApi.reducerPath]: medicalRecordIndexesApi.reducer,
 });
 
 export const setupStore = () => {
@@ -31,6 +35,8 @@ export const setupStore = () => {
         .concat(usersApi.middleware)
         .concat(authApi.middleware)
         .concat(notificationsApi.middleware)
+        .concat(medicalRecordsApi.middleware)
+        .concat(medicalRecordIndexesApi.middleware)
   });
 };
 

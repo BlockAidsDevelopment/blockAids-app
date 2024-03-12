@@ -1,6 +1,11 @@
-import React, {FC} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {Breadcrumbs, IBreadcrumb} from "../modules/breadcrumbs";
 import {TaskUpdateWidget} from "../modules/tasks";
+import {Grid} from "@mui/material";
+import {useParams} from "react-router-dom";
+import {tasksApi} from "../api/tasksApi";
+import {MedicalRecordsUpdateList} from "../modules/medicalRecords";
+import {medicalRecordsApi} from "../api/medicalRecordsApi";
 
 const breadcrumbs: IBreadcrumb[] = [
   {
@@ -21,11 +26,29 @@ const breadcrumbs: IBreadcrumb[] = [
 ];
 
 const TaskUpdate: FC = () => {
+  const {id} = useParams();
+  const {data: task} = tasksApi.useFetchTaskByIdQuery(Number(id));
+  const {data: medicalRecords} = medicalRecordsApi.useFetchAllByTaskTypeIdQuery(Number(id));
+  const [taskTypeId, setTaskTypeId] = useState<number>();
+
+  useEffect(() => {
+    if (task) {
+      setTaskTypeId(task.taskType.id);
+    }
+  }, [task]);
+
   return (
-    <div>
+    <>
       <Breadcrumbs breadcrumbs={breadcrumbs}/>
-      <TaskUpdateWidget/>
-    </div>
+      <Grid container rowSpacing={{xs: 0, sm: 2, md: 3}} columnSpacing={{xs: 0, sm: 2, md: 3}}>
+        <Grid item md={8} xs={12} style={{marginBottom: '25px'}}>
+          <TaskUpdateWidget task={task}/>
+        </Grid>
+        <Grid item md={4} xs={12} style={{marginBottom: '25px'}}>
+          <MedicalRecordsUpdateList medicalRecords={medicalRecords}/>
+        </Grid>
+      </Grid>
+    </>
   );
 }
 

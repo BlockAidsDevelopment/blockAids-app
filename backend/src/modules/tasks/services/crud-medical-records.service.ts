@@ -30,7 +30,7 @@ export class CrudMedicalRecordsService {
 
   findAllByTaskTypeId(taskId: string): Promise<MedicalRecords[]> {
     return this.medicalRecordsRepository.find({
-      where: { taskId: taskId.toString() },
+      where: { taskId: taskId },
       order: { id: "DESC" },
       relations: {
         task: true,
