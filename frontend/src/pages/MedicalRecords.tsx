@@ -20,7 +20,7 @@ const MedicalRecords: FC = () => {
     <div className="medical-records-page">
       <Breadcrumbs breadcrumbs={breadcrumbs}/>
       <div className="medical-records-add-btn">
-        <MedicalRecordsCreate/>
+        {/*<MedicalRecordsCreateModal/>*/}
       </div>
       <MedicalRecordsWidget/>
     </div>

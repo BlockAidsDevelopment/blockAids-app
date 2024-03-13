@@ -1,0 +1,44 @@
+.medical-records-area {
+  h4 {
+    font-size: 20px;
+  }
+
+  .medical-records-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.form-modal {
+  padding-bottom: 50px;
+
+  .child-modal-title {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  .form-modal-flex {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: end;
+    margin-bottom: 40px;
+
+    div {
+      margin-right: 10px;
+    }
+
+    button {
+      height: 50px;
+    }
+
+    label {
+      font-size: 13px !important;
+    }
+    .standard-select {
+      margin: 0;
+      height: 50px;
+    }
+  }
+}

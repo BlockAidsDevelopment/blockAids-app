@@ -45,7 +45,9 @@ const TaskUpdate: FC = () => {
           <TaskUpdateWidget task={task}/>
         </Grid>
         <Grid item md={4} xs={12} style={{marginBottom: '25px'}}>
-          <MedicalRecordsUpdateList medicalRecords={medicalRecords}/>
+          {
+            taskTypeId && <MedicalRecordsUpdateList medicalRecords={medicalRecords} taskTypeId={taskTypeId}/>
+          }
         </Grid>
       </Grid>
     </>
