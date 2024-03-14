@@ -15,9 +15,9 @@ export const medicalRecordsApi = createApi({
       }),
       providesTags: result => ['MedicalRecord']
     }),
-    fetchAllByTaskTypeId: build.query<IMedicalRecord[], number>({
+    fetchAllByTaskId: build.query<IMedicalRecord[], number>({
       query: (id) => ({
-        url: `/medical-records/task-type/${id}`,
+        url: `/medical-records/task/${id}`,
       }),
       providesTags: result => ['MedicalRecord']
     }),

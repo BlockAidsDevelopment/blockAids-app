@@ -4,31 +4,19 @@ import Modal from '@mui/material/Modal';
 import {FC, useState} from "react";
 import MyButton from "../../../ui/MyButton";
 import "../styles/MedicalRecords.scss";
-import MyInput from "../../../ui/MyInput";
-import typeTaskIcon from "../../../ui/assets/typeTaskIcon.svg";
+import CloseIcon from '@mui/icons-material/Close';
 import {medicalRecordIndexesApi} from "../../../api/medicalRecordIndexesApi";
 import TextTypeRecordFrom from "./medicalRecordFrorms/TextTypeRecordFrom";
 import NumberTypeRecordFrom from "./medicalRecordFrorms/NumberTypeRecordForm";
 import SelectTypeRecordFrom from "./medicalRecordFrorms/SelectTypeRecordFrom";
-
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 800,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-};
+import {ITask} from "../../../models/ITask";
 
 interface IMedicalRecordsCreateProps {
-  taskTypeId: number | null;
+  task: ITask;
 }
 
-const MedicalRecordsCreateModal: FC<IMedicalRecordsCreateProps> = ({taskTypeId}) => {
-  const {data: medicalRecordIndexes} = medicalRecordIndexesApi.useFetchAllByTaskTypeIdQuery(taskTypeId);
+const MedicalRecordsCreateModal: FC<IMedicalRecordsCreateProps> = ({task}) => {
+  const {data: medicalRecordIndexes} = medicalRecordIndexesApi.useFetchAllByTaskTypeIdQuery(task.taskType.id);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -47,20 +35,29 @@ const MedicalRecordsCreateModal: FC<IMedicalRecordsCreateProps> = ({taskTypeId})
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{...style, width: 800}} className="form-modal">
-          <h2 className="child-modal-title">Add new medical record</h2>
+        <Box sx={{width: 800}} className="form-modal">
+          <div className="form-modal-header">
+            <h2 className="child-modal-title">Add new medical record</h2>
+            <span onClick={handleClose}><CloseIcon/></span>
+          </div>
           <div className="form-modal-body">
             {
               medicalRecordIndexes &&
               medicalRecordIndexes.map((medicalRecordIndex) => {
                 if (medicalRecordIndex.type === "text") {
-                 return <TextTypeRecordFrom medicalRecordIndex={medicalRecordIndex}/>
+                  return <TextTypeRecordFrom medicalRecordIndex={medicalRecordIndex} task={task}
+                                             specialist={task.specialist}
+                                             user={task.user}/>
                 }
                 if (medicalRecordIndex.type === "number") {
-                  return <NumberTypeRecordFrom medicalRecordIndex={medicalRecordIndex}/>
+                  return <NumberTypeRecordFrom medicalRecordIndex={medicalRecordIndex} task={task}
+                                               specialist={task.specialist}
+                                               user={task.user}/>
                 }
                 if (medicalRecordIndex.type === "select") {
-                  return <SelectTypeRecordFrom medicalRecordIndex={medicalRecordIndex}/>
+                  return <SelectTypeRecordFrom medicalRecordIndex={medicalRecordIndex} task={task}
+                                               specialist={task.specialist}
+                                               user={task.user}/>
                 }
               })
             }

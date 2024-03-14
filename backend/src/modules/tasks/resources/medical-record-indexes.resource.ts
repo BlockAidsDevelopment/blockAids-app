@@ -21,7 +21,9 @@ export class MedicalRecordIndexesResource {
     this.name = medicalRecordIndex.name;
     this.unit = medicalRecordIndex.unit;
     this.type = medicalRecordIndex.type;
-    this.taskType = new TaskTypeResource(medicalRecordIndex.taskType);
+    this.taskType = medicalRecordIndex.taskType
+      ? new TaskTypeResource(medicalRecordIndex.taskType)
+      : null;
   }
 
   public static collect(

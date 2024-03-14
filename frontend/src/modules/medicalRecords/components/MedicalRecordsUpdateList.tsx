@@ -2,13 +2,15 @@ import {FC} from "react";
 import {IMedicalRecord} from "../../../models/IMedicalRecord";
 import "../styles/MedicalRecords.scss";
 import {MedicalRecordsCreate} from "../index";
+import {ITask} from "../../../models/ITask";
+import MedicalRecordsUpdateItem from "./MedicalRecordsUpdateItem";
 
 interface IMedicalRecordsProps {
   medicalRecords: IMedicalRecord[];
-  taskTypeId: number | null;
+  task: ITask;
 }
 
-const MedicalRecordsUpdateList: FC<IMedicalRecordsProps> = ({medicalRecords, taskTypeId}) => {
+const MedicalRecordsUpdateList: FC<IMedicalRecordsProps> = ({medicalRecords, task}) => {
   return (
     <>
       <div className="tasks-area">
@@ -16,12 +18,16 @@ const MedicalRecordsUpdateList: FC<IMedicalRecordsProps> = ({medicalRecords, tas
           <div className="medical-records-heading">
             <h4>Medical Records:</h4>
             {
-              taskTypeId &&  <MedicalRecordsCreate taskTypeId={taskTypeId}/>
+              task && <MedicalRecordsCreate task={task}/>
             }
           </div>
           {
+            medicalRecords && medicalRecords.length === 0 &&
+              <div style={{textAlign: "center"}}>There is no any medical records yet</div>
+          }
+          {
             medicalRecords && medicalRecords.map(record => (
-              <>{record.id}</>
+              <MedicalRecordsUpdateItem record={record}/>
             ))
           }
         </div>

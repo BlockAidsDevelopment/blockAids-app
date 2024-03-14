@@ -28,7 +28,7 @@ const breadcrumbs: IBreadcrumb[] = [
 const TaskUpdate: FC = () => {
   const {id} = useParams();
   const {data: task} = tasksApi.useFetchTaskByIdQuery(Number(id));
-  const {data: medicalRecords} = medicalRecordsApi.useFetchAllByTaskTypeIdQuery(Number(id));
+  const {data: medicalRecords} = medicalRecordsApi.useFetchAllByTaskIdQuery(Number(id));
   const [taskTypeId, setTaskTypeId] = useState<number>();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const TaskUpdate: FC = () => {
         </Grid>
         <Grid item md={4} xs={12} style={{marginBottom: '25px'}}>
           {
-            taskTypeId && <MedicalRecordsUpdateList medicalRecords={medicalRecords} taskTypeId={taskTypeId}/>
+            taskTypeId && <MedicalRecordsUpdateList medicalRecords={medicalRecords} task={task}/>
           }
         </Grid>
       </Grid>

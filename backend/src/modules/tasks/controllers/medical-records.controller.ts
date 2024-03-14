@@ -35,24 +35,29 @@ export class MedicalRecordsController {
   }
 
   @ApiResponse({ status: 200, type: [MedicalRecordsResource] })
-  @ApiOperation({ summary: "Get all medical records by task type id" })
-  @Get("/task-type/:id")
-  async findAllByTaskType(@Param("taskTypeId") taskTypeId: string) {
+  @ApiOperation({ summary: "Get all medical records by task id" })
+  @Get("/task/:taskId")
+  async findAllByTask(@Param("taskId") taskId: string) {
     const medicalRecord =
-      await this.crudMedicalRecordsService.findAllByTaskTypeId(taskTypeId);
+      await this.crudMedicalRecordsService.findAllByTaskId(taskId);
     return MedicalRecordsResource.collect(medicalRecord);
   }
 
   @ApiResponse({ status: 200, type: [MedicalRecordsResource] })
-  @ApiOperation({ summary: "Get all medical records by medical index id" })
-  @Get("/user/:id")
-  async findAllByUser(
-    @Param("medicalRecordIndexId") medicalRecordIndexId: string,
-  ) {
+  @ApiOperation({ summary: "Get all medical records by user id" })
+  @Get("/user/:userId")
+  async findAllByUser(@Param("userId") userId: string) {
     const medicalRecord =
-      await this.crudMedicalRecordsService.findAllByTaskTypeId(
-        medicalRecordIndexId,
-      );
+      await this.crudMedicalRecordsService.findAllByUserId(userId);
+    return MedicalRecordsResource.collect(medicalRecord);
+  }
+
+  @ApiResponse({ status: 200, type: [MedicalRecordsResource] })
+  @ApiOperation({ summary: "Get all medical records by specialist id" })
+  @Get("/specialist/:specialistId")
+  async findAllBySpecialist(@Param("specialistId") specialistId: string) {
+    const medicalRecord =
+      await this.crudMedicalRecordsService.findAllBySpecialistId(specialistId);
     return MedicalRecordsResource.collect(medicalRecord);
   }
 
@@ -75,6 +80,7 @@ export class MedicalRecordsController {
     const medicalRecord = await this.crudMedicalRecordsService.findOne(
       createdMedicalRecord.id,
     );
+
     return new MedicalRecordsResource(medicalRecord);
   }
 

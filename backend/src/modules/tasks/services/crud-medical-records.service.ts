@@ -24,30 +24,47 @@ export class CrudMedicalRecordsService {
       relations: {
         task: true,
         medicalRecordIndex: true,
+        user: true,
+        specialist: true,
       },
     });
   }
 
-  findAllByTaskTypeId(taskId: string): Promise<MedicalRecords[]> {
+  findAllByTaskId(taskId: string): Promise<MedicalRecords[]> {
     return this.medicalRecordsRepository.find({
       where: { taskId: taskId },
       order: { id: "DESC" },
       relations: {
         task: true,
         medicalRecordIndex: true,
+        user: true,
+        specialist: true,
       },
     });
   }
 
-  findAllByMedicalRecordsIndexId(
-    medicalRecordIndexId: string,
-  ): Promise<MedicalRecords[]> {
+  findAllByUserId(userId: string): Promise<MedicalRecords[]> {
     return this.medicalRecordsRepository.find({
-      where: { medicalRecordIndexId: medicalRecordIndexId.toString() },
+      where: { userId: userId.toString() },
       order: { id: "DESC" },
       relations: {
         task: true,
         medicalRecordIndex: true,
+        user: true,
+        specialist: true,
+      },
+    });
+  }
+
+  findAllBySpecialistId(specialistId: string): Promise<MedicalRecords[]> {
+    return this.medicalRecordsRepository.find({
+      where: { specialistId: specialistId.toString() },
+      order: { id: "DESC" },
+      relations: {
+        task: true,
+        medicalRecordIndex: true,
+        user: true,
+        specialist: true,
       },
     });
   }
@@ -59,6 +76,8 @@ export class CrudMedicalRecordsService {
         relations: {
           task: true,
           medicalRecordIndex: true,
+          user: true,
+          specialist: true,
         },
       });
     } catch (e) {

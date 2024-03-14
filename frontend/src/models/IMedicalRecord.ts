@@ -7,6 +7,7 @@ export interface IMedicalRecord {
   id: number;
   value: string;
   saved: boolean;
+  created_at: string;
   task: ITask;
   medicalRecordIndex: IMedicalRecordIndex;
   user: IUser;

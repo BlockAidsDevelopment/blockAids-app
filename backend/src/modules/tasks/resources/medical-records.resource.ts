@@ -14,6 +14,8 @@ export class MedicalRecordsResource {
   public value: string;
   @ApiProperty({ example: true })
   public saved: boolean;
+  @ApiProperty({ example: "12.02.2023" })
+  public created_at: Date;
   @ApiProperty({ example: TasksResource })
   public task: TasksResource;
   @ApiProperty({ example: MedicalRecordIndexesResource })
@@ -27,12 +29,19 @@ export class MedicalRecordsResource {
     this.id = medicalRecord.id;
     this.value = medicalRecord.value;
     this.saved = medicalRecord.saved;
-    this.task = new TasksResource(medicalRecord.task);
-    this.medicalRecordIndex = new MedicalRecordIndexesResource(
-      medicalRecord.medicalRecordIndex,
-    );
-    this.user = new UsersResource(medicalRecord.user);
-    this.specialist = new SpecialistsResource(medicalRecord.specialist);
+    this.created_at = medicalRecord.created_at;
+    this.task = medicalRecord.task
+      ? new TasksResource(medicalRecord.task)
+      : null;
+    this.medicalRecordIndex = medicalRecord.medicalRecordIndex
+      ? new MedicalRecordIndexesResource(medicalRecord.medicalRecordIndex)
+      : null;
+    this.user = medicalRecord.user
+      ? new UsersResource(medicalRecord.user)
+      : null;
+    this.specialist = medicalRecord.specialist
+      ? new SpecialistsResource(medicalRecord.specialist)
+      : null;
   }
 
   public static collect(medicalRecords: any[]): MedicalRecordsResource[] {
