@@ -94,7 +94,6 @@ export default {
     hideModal(e) {
       const modal = document.getElementById('modal');
       const closeBtn = document.getElementById('close-btn');
-      console.log(e.target)
       if (e.target === modal || e.target === closeBtn) {
         this.isModalVisible = false;
       }
@@ -128,9 +127,13 @@ export default {
       return true;
     },
     resetForm() {
-      this.form.name = null;
-      this.form.unit = null;
-      this.form.type = null;
+      this.form = {
+        name: '',
+        unit: '',
+        type: ''
+      };
+      console.log( this.form)
+
     }
   }
 }

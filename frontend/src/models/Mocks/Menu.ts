@@ -19,19 +19,19 @@ export const getMenus = (notificationsQty: number = 0) => {
       className: 'm-item',
     },
     {
-      id: 13,
-      name: 'Notifications',
-      icon: '/images/menuIcons/notification.png',
-      notification: notificationsQty,
-      url: '/notifications',
-      className: 'm-item',
-    },
-    {
       id: 10,
       name: 'Medical records',
       icon: '/images/menuIcons/medicalRecords.png',
       notification: 0,
       url: '/medical-records',
+      className: 'm-item',
+    },
+    {
+      id: 13,
+      name: 'Notifications',
+      icon: '/images/menuIcons/notification.png',
+      notification: notificationsQty,
+      url: '/notifications',
       className: 'm-item',
     },
     {

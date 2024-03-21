@@ -46,11 +46,11 @@ const SidebarProfile: FC = () => {
                           <span className="user-aids" onClick={signOut}>Logout</span>
                       </p>
                   </Grid>
-                {type === 'user' &&
-                    <Grid item xs={12} className="wallet-area">
-                        <SidebarWallet/>
-                    </Grid>
-                }
+                {/*{type === 'user' &&*/}
+                {/*    <Grid item xs={12} className="wallet-area">*/}
+                {/*        <SidebarWallet/>*/}
+                {/*    </Grid>*/}
+                {/*}*/}
                 {/*<Grid item xs={2} className="arrow-area">*/}
                 {/*    <p className="arrow"></p>*/}
                 {/*</Grid>*/}

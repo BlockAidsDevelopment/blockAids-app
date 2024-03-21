@@ -173,6 +173,7 @@ input:-webkit-autofill:active {
   font-family: 'Satoshi-Bold', serif;
   display: flex;
   align-items: center;
+  justify-content: center;
 
   &:hover {
     background: $black0;

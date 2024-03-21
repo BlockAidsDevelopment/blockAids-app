@@ -1,49 +1,23 @@
 import React, {FC} from "react";
-import Brightness1Icon from "@mui/icons-material/Brightness1";
+import {medicalRecordsApi} from "../../../api/medicalRecordsApi";
+import MedicalRecordsList from "./MedicalRecordsList";
+import {useAppSelector} from "../../../hooks/redux";
 
 const MedicalRecordsWidget: FC = () => {
-  return (
-    <div className="medical-records-wrapper">
-      <div className="medical-record medical-record-heading">
-        <div>Medical Record</div>
-        <div>Last Index</div>
-        <div>Max Allowed</div>
-        <div>Specialist</div>
-        <div>Patient</div>
-        <div>Date</div>
-      </div>
+  const {type, authUser} = useAppSelector(state => state.authReducer);
 
-      <div className="medical-record">
-        <div>CD4 cell level</div>
-        <div className="icon-contained"><Brightness1Icon color="error"/> 56</div>
-        <div>117</div>
-        <div>Dr. Brew</div>
-        <div>John Smith</div>
-        <div className="medical-record-date">Wed Mar 06 2024</div>
-      </div>
-      <div className="medical-record">
-        <div>CD4 cell level</div>
-        <div className="icon-contained"><Brightness1Icon color="success"/> 115</div>
-        <div> 117</div>
-        <div>Dr. Brew</div>
-        <div>John Smith</div>
-        <div className="medical-record-date">Wed Mar 06 2024</div>
-      </div>
-      <div className="medical-record">
-        <div>CD4 cell level</div>
-        <div className="icon-contained"><Brightness1Icon color="info"/> 99</div>
-        <div> 117</div>
-        <div>Dr. Brew</div>
-        <div>John Smith</div>
-        <div className="medical-record-date">Wed Mar 06 2024</div>
-      </div>
-      <div className="medical-record">
-        <div>CD4 cell level</div>
-        <div className="icon-contained"><Brightness1Icon color="secondary"/> 200</div>
-        <div> 117</div>
-        <div>Dr. Brew</div>
-        <div>John Smith</div>
-        <div className="medical-record-date">Wed Mar 06 2024</div>
+  let fetchMedicalRecords = medicalRecordsApi.useFetchAllByUserIdQuery;
+  if (type === 'specialist') {
+    fetchMedicalRecords = medicalRecordsApi.useFetchAllBySpecialistIdQuery;
+  }
+
+  const {data: medicalRecords} = fetchMedicalRecords(authUser.id);
+
+  return (
+    <div className="tasks-area">
+      <div className="task-create-area medical-records-area">
+        <h1>Medical Records</h1>
+        <MedicalRecordsList medicalRecords={medicalRecords} isVisibleDetails={true}/>
       </div>
     </div>
   )

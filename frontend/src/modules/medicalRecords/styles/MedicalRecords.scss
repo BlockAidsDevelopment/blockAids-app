@@ -1,4 +1,9 @@
 .medical-records-area {
+  h1 {
+    font-size: 25px;
+    margin-bottom: 30px;
+  }
+
   h4 {
     font-size: 20px;
   }
@@ -20,6 +25,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    section {
+      flex: 3;
+    }
+
+    .delete-section, .status-section {
+      flex: 1;
+      text-align: right;
+    }
+
+    .signed-section {
+      flex: 2;
+    }
 
     b {
       font-weight: 600;
@@ -45,6 +63,7 @@
   transform: translate(-50%, -50%);
   padding: 20px 40px;
   border-radius: 8px;
+  width: 800px;
 
   .form-modal-header {
     padding-top: 20px;
@@ -98,4 +117,60 @@
     color: #13C2BD;
     margin-right: 20px;
   }
+}
+
+@media only screen and (max-width: 768px) {
+  .medical-records-area {
+    margin-top: -40px;
+
+    h4 {
+      font-size: 20px;
+    }
+
+    .medical-records-heading {
+      text-align: center;
+      flex-direction: column;
+      gap: 30px;
+
+    }
+
+    .medical-records-item {
+      align-items: flex-start;
+      text-align: center;
+      font-size: 12px;
+
+      b {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .delete-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        padding-top: 25px;
+      }
+    }
+  }
+
+  .right-align {
+    align-items: flex-start !important;
+    text-align: left !important;
+    padding-left: 30px !important;
+  }
+
+  .form-modal {
+    width: 95%;
+
+    .standard-button {
+      width: 50px;
+    }
+
+    .standard-select, .standard-input {
+      width: 260px;
+    }
+  }
+
+
 }

@@ -8,6 +8,7 @@ import {IUser} from "../../../../models/IUser";
 import {ISpecialist} from "../../../../models/ISpecialist";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import {ITask} from "../../../../models/ITask";
+import {setNotification} from "../../../tasks/services/notifications";
 
 interface ITextTypeRecordFromProps {
   medicalRecordIndex: IMedicalRecordIndex;
