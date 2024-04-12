@@ -9,7 +9,6 @@ import {useAppSelector} from "../../../hooks/redux";
 import {setNotification} from "../services/notifications";
 import {notificationsApi} from "../../../api/notificationsApi";
 import Loading from "../../../components/Loading";
-import {PhantomProvider} from "../../../models/IPhantomProvider";
 
 interface ITaskRewardProps {
   user: IUser;
@@ -21,21 +20,16 @@ const TaskReward: FC<ITaskRewardProps> = ({user, task}) => {
   const [updateTask] = tasksApi.useUpdateTaskMutation();
   const [createNotification] = notificationsApi.useCreateNotificationMutation();
 
-  const [provider, setProvider] = useState<PhantomProvider | undefined>(
+  const [provider, setProvider] = useState<undefined>(
     undefined
   );
-  const [walletKey, setWalletKey] = useState<PhantomProvider | undefined>(
+  const [walletKey, setWalletKey] = useState<undefined>(
     undefined
   );
 
   const [loading, setLoading] = useState<boolean>(false)
 
-  const getProvider = (): PhantomProvider | undefined => {
-    if ("solana" in window) {
-      // @ts-ignore
-      const provider = window.solana as any;
-      if (provider.isPhantom) return provider as PhantomProvider;
-    }
+  const getProvider = () => {
   };
 
   const transferTokenToRecipient = async () => {
@@ -61,33 +55,15 @@ const TaskReward: FC<ITaskRewardProps> = ({user, task}) => {
   }
 
   const connectWallet = async () => {
-    // @ts-ignore
-    const {solana} = window;
-
-    if (solana) {
-      try {
-        const response = await solana.connect();
-        setWalletKey(response.publicKey.toString());
-        await transferTokenToRecipient();
-      } catch (err) {
-        console.log(err);
-      }
-    }
   };
 
   const disconnectWallet = async () => {
-    // @ts-ignore
-    const {solana} = window;
-
-    if (walletKey && solana) {
-      await (solana as PhantomProvider).disconnect();
-      setWalletKey(undefined);
-    }
   };
 
   useEffect(() => {
     const provider = getProvider();
 
+    // @ts-ignore
     if (provider) setProvider(provider);
     else setProvider(undefined);
   }, []);
@@ -119,8 +95,7 @@ const TaskReward: FC<ITaskRewardProps> = ({user, task}) => {
       {
         !provider && (
           <p>
-            No provider found. Install{" "}
-            <a href="https://phantom.app/">Phantom Browser extension</a>
+            No provider found.
           </p>
         )
       }

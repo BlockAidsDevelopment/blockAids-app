@@ -3,7 +3,6 @@ import {Avatar, Button, Grid, Menu} from "@mui/material";
 import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {logOut} from '../../../store/reducers/AuthSlice';
-import {SidebarWallet} from "../index";
 
 const SidebarProfile: FC = () => {
   const dispatch = useAppDispatch();
