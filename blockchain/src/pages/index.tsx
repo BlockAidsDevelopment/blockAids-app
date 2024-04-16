@@ -1,12 +1,13 @@
 import NearConnection from "@/components/NearConnection";
-import "@near-wallet-selector/modal-ui/styles.css"
-// import NearTest from "@/components/NearTest";
+import "@near-wallet-selector/modal-ui/styles.css";
+import ConnectWallet from "@/components/ConnectWallet";
 
-export default function Page() {
+const Home = () => {
   return (
-    <>
-      <NearConnection/>
-      {/*<NearTest/>*/}
-    </>
+    <div className="home-page">
+      <ConnectWallet/>
+    </div>
   )
 }
+
+export default Home;

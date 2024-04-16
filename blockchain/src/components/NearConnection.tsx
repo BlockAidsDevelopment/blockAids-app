@@ -118,19 +118,19 @@ const NearConnection = () => {
       const res = await wallet.signAndSendTransaction({
         signerId: account?.accountId!,
         actions: [
-          // {
-          //   type: "FunctionCall",
-          //   params: {
-          //     methodName: "storage_deposit",
-          //     args: {
-          //       "account_id": "aids-near.testnet",
-          //       "registration_only": true,
-          //       "amount": "0.00235"
-          //     },
-          //     gas: BOATLOAD_OF_GAS,
-          //     deposit: "1"
-          //   }
-          // },
+          {
+            type: "FunctionCall",
+            params: {
+              methodName: "storage_deposit",
+              args: {
+                "account_id": "aids-near.testnet",
+                "registration_only": true,
+                "amount": "0.00235"
+              },
+              gas: BOATLOAD_OF_GAS,
+              deposit: "1"
+            }
+          },
           {
             type: "FunctionCall",
             params: {

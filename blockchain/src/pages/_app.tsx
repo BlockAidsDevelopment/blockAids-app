@@ -1,5 +1,21 @@
-import type { AppProps } from 'next/app'
+import type {AppProps} from 'next/app'
+import {Container} from '@mui/material';
+import NabBar from "@/components/NabBar";
+import theme from '../styles/theme';
+import {ThemeProvider} from '@mui/material/styles';
+import "../styles/fonts.css";
+import "../styles/globals.css";
+import "@near-wallet-selector/modal-ui/styles.css"
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const App = ({Component, pageProps}: AppProps) => {
+  return (
+      <ThemeProvider theme={theme}>
+        <Container maxWidth="xl">
+          <NabBar/>
+          <Component {...pageProps} />
+        </Container>
+      </ThemeProvider>
+  )
 }
+
+export default App;

@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    font-family: 'Satoshi-Medium', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #F6FEFE;
+}
+
+* {
+    color: #010101;
+}
+
+.nav-bar {
+    text-align: center;
+    padding: 25px;
+    margin-bottom: 20px;
+
+    img {
+        max-width: 300px;
+    }
+}
+
+.connect-wallet-section {
+    text-align: center;
+    padding: 2rem;
+}
+
+h2 {
+    text-transform: uppercase;
+    font-weight: normal;
+    font-family: 'Satoshi-Bold', sans-serif;
+    margin-bottom: 40px;
+}
+
+p {
+    font-family: 'Satoshi-Bold', sans-serif;
+    font-size: 17px;
+    margin-top: 20px;
+    color: #010101;
+}
+
+.rewards-section {
+    text-align: center;
+    padding: 3rem;
+
+    .tasks-list {
+        text-align: left;
+
+        .tasks-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            border-bottom: 1px solid #E4E5E7;
+            padding: 15px;
+        }
+        .tasks-button-area {
+            text-align: center;
+            margin: 30px;
+            button {
+                background-color: #13C2BD;
+                color: #FFF;
+            }
+        }
+    }
+}
+
+.content-part {
+    background-color: #D1FAF9;
+    box-shadow: 0 8px 24px -4px rgba(173, 176, 184, 0.08), 0 6px 12px -6px rgba(173, 176, 184, 0.12);
+    border-radius: 8px;
+}
