@@ -9,7 +9,7 @@ const Rewards = () => {
       <Grid container spacing={{xs: 2, md: 3}}>
         <Grid item lg={8}>
           <Box className="content-part">
-            <SendReward/>
+            {/*<SendReward/>*/}
           </Box>
         </Grid>
         <Grid item lg={4}>

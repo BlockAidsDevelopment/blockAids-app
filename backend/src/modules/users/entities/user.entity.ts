@@ -35,7 +35,7 @@ export class User {
   @Column({ type: "varchar", length: 255, default: "avatar-mock.png" })
   avatar: string;
 
-  @Column({ type: "int", default: 0 })
+  @Column({ type: "boolean", default: 0 })
   allowed: boolean;
 
   @Column({

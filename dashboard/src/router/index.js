@@ -12,6 +12,7 @@ import UserEdit from "@/views/Users/UserEdit.vue";
 import SpecialistsEdit from "@/views/Specialists/SpecialistsEdit.vue";
 import TaskTypesEdit from "@/views/TaskTypes/TaskTypesEdit.vue";
 import OrganizationsEdit from "@/views/Organizations/OrganizationsEdit.vue";
+import Moderate from "@/views/Moderations/Moderate.vue";
 
 const routes = [
     {
@@ -72,6 +73,12 @@ const routes = [
         path: "/dashboard/task-types/edit/:id",
         name: "Edit Task Type",
         component: TaskTypesEdit,
+        beforeEnter: AuthGuard,
+    },
+    {
+        path: "/dashboard/moderate",
+        name: "Moderate",
+        component: Moderate,
         beforeEnter: AuthGuard,
     },
 ];

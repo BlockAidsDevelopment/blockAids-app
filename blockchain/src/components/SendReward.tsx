@@ -49,11 +49,10 @@ const SendReward: FC<ISendReward> = ({task}) => {
   const transfer = async () => {
     if (wallet) {
       const {formatNearAmount} = utils.format;
-      const formattedAmount = formatNearAmount("1000000000000000000000000", 9);
+      const formattedAmount = formatNearAmount(task.taskType.reward.toString(), 9);
       const attachedDeposit = "1";
-      const attachedDeposit2 = formatNearAmount("1000000000000000000", 9);
 
-      const res = await wallet.signAndSendTransaction({
+      await wallet.signAndSendTransaction({
         signerId: account?.accountId!,
         actions: [
           {
@@ -61,8 +60,8 @@ const SendReward: FC<ISendReward> = ({task}) => {
             params: {
               methodName: "ft_transfer",
               args: {
-                "amount": "190000000000",
-                "receiver_id": "consumer_ba.testnet",
+                "amount": task.taskType.reward.toString() + "000000000",
+                "receiver_id": task.user.accountId,
                 "memo": "Simple transfer",
                 "msg": "Simple message"
               },
@@ -74,7 +73,6 @@ const SendReward: FC<ISendReward> = ({task}) => {
       })
     }
   }
-
 
   const formatData = (date: string) => {
     return new Date(date).toDateString();
@@ -98,19 +96,19 @@ const SendReward: FC<ISendReward> = ({task}) => {
                       <b>Organization: </b><span> {task.organization.name}</span>
                   </div>
                   <div className="tasks-item">
-                      <b>Specialist: </b><span> {task.specialist.name}</span>
-                  </div>
-                  <div className="tasks-item">
-                      <b>Patient: </b><span> {task.user.name}</span>
+                      <b>Specialist/Patient: </b><span> {task.specialist.name}/{task.user.name}</span>
                   </div>
                   <div className="tasks-item">
                       <b>Date Due: </b><span> {formatData(task.dateDue)} </span>
                   </div>
                   <div className="tasks-item">
+                      <b>Account Id: </b><span> {task.user.accountId}</span>
+                  </div>
+                  <div className="tasks-item">
                       <b>Reward: </b><span> {task.taskType.reward} AID</span>
                   </div>
                   <div className="tasks-button-area">
-                      <Button variant="contained" size={"large"} onClick={transfer}>Approve and send Aids</Button>
+                      <Button variant="contained" size={"large"} onClick={transfer}>Approve and send reward</Button>
                   </div>
               </div>
           </div>

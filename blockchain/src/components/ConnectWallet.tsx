@@ -52,7 +52,6 @@ const ConnectWallet = () => {
       {
         account && <><Button variant="outlined" size={"large"} onClick={signOut}>Sign Out</Button>
               <p>blockaids_dev.testnet</p>
-          {/*<p>100 AID</p>*/}
           </>
       }
     </div>

@@ -24,6 +24,7 @@ import AuthGuard from "./guards/AuthGuard";
 import GuestGuard from "./guards/GuestGuard";
 import {useAppSelector} from "./hooks/redux";
 import {notificationsApi} from "./api/notificationsApi";
+import AllowanceModal from "./components/AllowanceModal";
 
 const App: FC = () => {
   const {isLogged, authUser, type} = useAppSelector(state => state.authReducer)
@@ -51,8 +52,12 @@ const App: FC = () => {
         }
 
         <div className="wrapper">
+
           {isLogged &&
               <>
+                {
+                  !authUser.allowed && <AllowanceModal/>
+                }
                   <BrowserView className="desktop-device">
                       <aside className="sidebar-area">
                           <Sidebar menus={menus}/>

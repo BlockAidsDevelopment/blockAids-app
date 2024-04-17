@@ -63,6 +63,18 @@
           </template>
         </sidenav-item>
       </li>
+
+      <li class="nav-item">
+        <sidenav-item
+            url="/dashboard/moderate"
+            :class="getRoute() === 'task-types' ? 'active' : ''"
+            :navText="'Moderate'"
+        >
+          <template v-slot:icon>
+            <i class="ni ni-archive-2 text-danger text-sm opacity-10"></i>
+          </template>
+        </sidenav-item>
+      </li>
     </ul>
   </div>
 </template>

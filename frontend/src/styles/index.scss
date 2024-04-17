@@ -508,3 +508,28 @@ input:-webkit-autofill:active {
   right: 0;
   top: 15px;
 }
+
+.allowance-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  padding: 2rem;
+  background-color: #0ba39e;
+  color: #FFF;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.modal-buttons-area {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.light-btn {
+  background-color: $green15;
+  color: $green5;
+}

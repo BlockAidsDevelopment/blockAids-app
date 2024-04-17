@@ -11,7 +11,9 @@ const SuccessTransfer:FC<ISuccessTransfer> = ({transactionHashes}) => {
         <h2>Success!</h2>
         <p>Transaction was sent!</p>
         <p>{transactionHashes}</p> <br/><br/>
-        <Button variant={"contained"} size={"large"}> Go home</Button>
+        <a href="http://localhost:3001">
+          <Button variant={"contained"} size={"large"}> Go back</Button>
+        </a>
       </div>
   )
 }

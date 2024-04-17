@@ -13,7 +13,7 @@ export class UsersResource {
   @ApiProperty({ example: "+3736091232" })
   public phone: string;
   @ApiProperty({ example: "account.testnet" })
-  public account_id: string;
+  public accountId: string;
   @ApiProperty({ example: "2gCr6A9bk7rfXqwwBsW1PB63Yh19perTjH7y5yvKCYHN" })
   public public_key: string;
   @ApiProperty({ example: "johny-avatar.png" })
@@ -32,7 +32,7 @@ export class UsersResource {
     this.name = user.name;
     this.email = user.email;
     this.phone = user.phone;
-    this.account_id = user.account_id;
+    this.accountId = user.account_id;
     this.public_key = user.public_key;
     this.avatar = user.avatar;
     this.allowed = user.allowed;

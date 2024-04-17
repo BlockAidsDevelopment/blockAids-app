@@ -80,7 +80,6 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
     @UploadedFile() avatar: any,
   ) {
-    await this.validationUsersService.validateEmail(updateUserDto.email, +id);
     await this.crudUsersService.updateUser(+id, updateUserDto, avatar);
     const user = await this.crudUsersService.findUser(+id);
     return new UsersResource(user);
