@@ -8,7 +8,8 @@ import {
   Delete,
   HttpCode,
   UseInterceptors,
-  UploadedFile, Query, Put,
+  UploadedFile,
+  Query,
 } from "@nestjs/common";
 import {
   ApiConsumes,
@@ -61,10 +62,10 @@ export class UsersController {
   }
 
   @ApiResponse({ status: 200, type: UsersResource })
-  @ApiOperation({ summary: "Update user public key" })
-  @Post("public-key")
+  @ApiOperation({ summary: "Update user account id" })
+  @Post("account-id")
   async updatePublicKey(@Body() updateUserDto: UpdateUserDto) {
-    return await this.crudUsersService.updateUserPublicKey(
+    return await this.crudUsersService.updateUserAccountId(
       updateUserDto,
     );
   }
@@ -77,7 +78,7 @@ export class UsersController {
   async update(
     @Param("id") id: string,
     @Body() updateUserDto: UpdateUserDto,
-    @UploadedFile() avatar,
+    @UploadedFile() avatar: any,
   ) {
     await this.validationUsersService.validateEmail(updateUserDto.email, +id);
     await this.crudUsersService.updateUser(+id, updateUserDto, avatar);

@@ -17,7 +17,7 @@ export class User {
   phone: string;
 
   @Column({ type: "varchar", length: 100, nullable: true })
-  public_key: string;
+  account_id: string;
 
   @Column({ type: "date", nullable: true })
   birthdate: Date | null;
@@ -34,6 +34,9 @@ export class User {
 
   @Column({ type: "varchar", length: 255, default: "avatar-mock.png" })
   avatar: string;
+
+  @Column({ type: "int", default: 0 })
+  allowed: boolean;
 
   @Column({
     type: "varchar",

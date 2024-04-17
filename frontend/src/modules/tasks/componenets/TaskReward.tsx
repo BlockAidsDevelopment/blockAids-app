@@ -36,7 +36,7 @@ const TaskReward: FC<ITaskRewardProps> = ({user, task}) => {
     try {
       setLoading(true);
       const body = {
-        recipientPublicKey: user.public_key,
+        recipientPublicKey: user.accountId,
         amount: Number(task.taskType.reward),
         token: `${process.env.REACT_APP_TOKEN_CURRENCY}`,
       }

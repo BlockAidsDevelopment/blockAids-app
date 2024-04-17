@@ -12,10 +12,14 @@ export class UsersResource {
   public email: string;
   @ApiProperty({ example: "+3736091232" })
   public phone: string;
+  @ApiProperty({ example: "account.testnet" })
+  public account_id: string;
   @ApiProperty({ example: "2gCr6A9bk7rfXqwwBsW1PB63Yh19perTjH7y5yvKCYHN" })
   public public_key: string;
   @ApiProperty({ example: "johny-avatar.png" })
   public avatar: string;
+  @ApiProperty({ example: true })
+  public allowed: boolean;
   @ApiProperty({ example: "https://avatars.githubusercontent.com/u/36919907" })
   public avatar_link: string;
   @ApiProperty({ example: UserGenderEnum.male })
@@ -23,20 +27,22 @@ export class UsersResource {
   @ApiProperty({ example: "1990-07-10" })
   public birthdate: Date | null;
 
-  public constructor(user) {
+  public constructor(user: any) {
     this.id = user.id;
     this.name = user.name;
     this.email = user.email;
     this.phone = user.phone;
+    this.account_id = user.account_id;
     this.public_key = user.public_key;
     this.avatar = user.avatar;
+    this.allowed = user.allowed;
     this.avatar_link = user.avatar_link;
     this.gender = user.gender;
     this.birthdate = user.birthdate;
   }
 
-  public static collect(users): UsersResource[] {
-    return users.map((user) => {
+  public static collect(users: any): UsersResource[] {
+    return users.map((user: any) => {
       return new UsersResource(user);
     });
   }

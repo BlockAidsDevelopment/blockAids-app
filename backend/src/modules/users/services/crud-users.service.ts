@@ -73,17 +73,17 @@ export class CrudUsersService {
     return await this.userRepository.update(id, updateUserDto);
   }
 
-  async updateUserPublicKey(
+  async updateUserAccountId(
     updateUserDto: UpdateUserDto,
   ): Promise<UpdateResult> {
     const user = await this.userRepository.findOne({
       where: {
-        public_key: IsNull(),
+        account_id: IsNull(),
       },
     });
     return await this.userRepository.update(
       { id: user.id },
-      { public_key: updateUserDto.public_key },
+      { account_id: updateUserDto.account_id },
     );
   }
 

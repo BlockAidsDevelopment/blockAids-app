@@ -24,7 +24,7 @@ const ProfileUser: FC = () => {
   const [name, setName] = useState(authUser.name);
   const [email, setEmail] = useState(authUser.email);
   const [phone, setPhone] = useState('');
-  const [publicKey, setPublicKey] = useState('');
+  const [accountId, setAccountId] = useState('');
   const [birthdate, setBirthdate] = useState<Date | null | undefined>(undefined);
   const [gender, setGender] = React.useState('');
   const [avatar, setAvatar] = React.useState('');
@@ -37,7 +37,7 @@ const ProfileUser: FC = () => {
       setName(currentUser.name);
       setEmail(currentUser.email);
       setPhone(currentUser.phone);
-      setPublicKey(currentUser.public_key);
+      setAccountId(currentUser.accountId);
       setGender(currentUser.gender);
       setAvatar(currentUser.avatar);
       if (currentUser.birthdate) {
@@ -57,7 +57,7 @@ const ProfileUser: FC = () => {
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value);
 
   const handlePhone = (event: React.ChangeEvent<HTMLInputElement>) => setPhone(event.target.value);
-  const handlePublicKey = (event: React.ChangeEvent<HTMLInputElement>) => setPublicKey(event.target.value);
+  const handleAccountId = (event: React.ChangeEvent<HTMLInputElement>) => setAccountId(event.target.value);
 
   const handleBirthdate = (date: Date | null | undefined) => setBirthdate(date);
 
@@ -78,7 +78,7 @@ const ProfileUser: FC = () => {
         phone,
         gender,
         birthdate: birthdate?.toISOString(),
-        public_key: publicKey
+        accountId: accountId
       }).unwrap();
       showSuccessAnimation();
     } catch (err) {
@@ -134,12 +134,12 @@ const ProfileUser: FC = () => {
           </Grid>
           <Grid item sm={6} xs={12} className="profile-field">
             <MyInput type='tel'
-                     name='publicKey'
-                     label='Public key'
+                     name='accountId'
+                     label='Account Id'
                      icon={passwordIcon}
-                     value={publicKey}
+                     value={accountId}
                      disabled={true}
-                     onChange={handlePublicKey}/>
+                     onChange={handleAccountId}/>
           </Grid>
           <Grid item md={6} xs={12}>
             <MyDatePicker label={'Date of birth'} onChange={handleBirthdate} selected={birthdate}

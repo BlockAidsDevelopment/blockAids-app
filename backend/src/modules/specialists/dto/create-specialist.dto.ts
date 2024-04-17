@@ -30,6 +30,11 @@ export class CreateSpecialistDto {
   @IsEmail({}, { message: "Please provide valid Email." })
   email: string;
 
+  @ApiProperty({ example: "account.testnet" })
+  @IsString()
+  @ValidateIf((o) => "account_id" in o)
+  account_id: string;
+
   @ApiProperty({ example: "Neurologist", required: false })
   @ValidateIf((o) => "job_position" in o)
   @IsString()
@@ -43,6 +48,11 @@ export class CreateSpecialistDto {
   @ValidateIf((o) => "avatar" in o)
   @IsOptional()
   avatar: string;
+
+  @ApiProperty({ example: true, required: false })
+  @ValidateIf((o) => "allowed" in o)
+  @IsOptional()
+  allowed: boolean;
 
   @ApiProperty({ example: "qwerQWER1234%$" })
   @IsNotEmpty()

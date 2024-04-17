@@ -54,8 +54,10 @@ export class AuthService {
         {
           ...registerAuthDto,
           avatar: "avatar-mock.png",
+          allowed: false,
           job_position: null,
           organizationId: registerAuthDto.organizationId,
+          account_id: null,
         },
         null,
       );
@@ -70,10 +72,11 @@ export class AuthService {
           name: registerAuthDto.name,
           email: registerAuthDto.email,
           password: registerAuthDto.password,
-          public_key: null,
+          account_id: null,
           phone: null,
           birthdate: null,
           avatar: "avatar-mock.png",
+          allowed: false,
           avatar_link: "https://avatars.githubusercontent.com/u/36919907",
           gender: UserGenderEnum.other,
         },

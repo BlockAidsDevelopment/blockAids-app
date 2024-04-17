@@ -35,14 +35,11 @@ export class UpdateUserDto {
   @IsNotEmpty()
   phone: string;
 
-  @ApiProperty({
-    example: "2gCr6A9bk7rfXqwwBsW1PB63Yh19perTjH7y5yvKCYHN",
-    required: false,
-  })
-  @ValidateIf((o) => "public_key" in o)
+  @ApiProperty({ example: "account.testnet", required: false })
+  @ValidateIf((o) => "account_id" in o)
   @IsString()
   @IsNotEmpty()
-  public_key: string;
+  account_id: string;
 
   @ApiProperty({ example: "1990-07-10", required: false })
   @ValidateIf((o) => "birthdate" in o)
@@ -61,6 +58,11 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   avatar: string;
+
+  @ApiProperty({ example: true, required: false })
+  @ValidateIf((o) => "allowed" in o)
+  @IsOptional()
+  allowed: boolean;
 
   @ApiProperty({
     example: "https://avatars.githubusercontent.com/u/36919907",

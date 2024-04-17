@@ -33,6 +33,11 @@ export class UpdateSpecialistDto extends PartialType(CreateSpecialistDto) {
   @IsEmail({}, { message: "Please provide valid Email." })
   email: string;
 
+  @ApiProperty({ example: "account.testnet" })
+  @IsString()
+  @ValidateIf((o) => "account_id" in o)
+  account_id: string;
+
   @ApiProperty({ example: "Neurologist", required: false })
   @ValidateIf((o) => "phone" in o)
   @IsString()
@@ -44,6 +49,11 @@ export class UpdateSpecialistDto extends PartialType(CreateSpecialistDto) {
   @IsOptional()
   @IsString()
   avatar: string;
+
+  @ApiProperty({ example: true, required: false })
+  @ValidateIf((o) => "allowed" in o)
+  @IsOptional()
+  allowed: boolean;
 
   @ApiProperty({ example: "qwerQWER1234%$", required: false })
   @ValidateIf((o) => "password" in o)
