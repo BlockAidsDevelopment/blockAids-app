@@ -4,31 +4,52 @@ import SendReward from "@/components/SendReward";
 import {Box, Grid} from "@mui/material";
 import {useEffect, useState} from "react";
 import {ITask} from "@/models/ITask";
-
+import {useRouter} from "next/router";
+import {IMedicalRecord} from "@/models/IMedicalRecord";
 
 const RewardTask = () => {
-  const {wallet, account} = useNearStore();
-  const [task, setTask] = useState<ITask>();
+  const router = useRouter();
+  const {account} = useNearStore();
+  const [task, setTask] = useState<ITask | null>();
+  const [taskFetchError, setTaskFetchError] = useState<boolean>(false);
+  const [medicalRecords, setMedicalRecords] = useState<IMedicalRecord | null>();
+  const [medicalRecordsFetchError, setMedicalRecordsFetchError] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetch(' http://localhost:4000/api/tasks/1', {cache: 'no-store'});
-      const json = await data.json();
+    if (!router.isReady) return;
+    const taskId = router.query.task;
+    setTaskFetchError(false);
+    fetchTask(taskId).catch(console.error);
+    fetchMedicalRecords(taskId).catch(console.error);
+  }, [router.isReady])
+
+  const fetchTask = async (taskId: string | string[] | undefined) => {
+    const data = await fetch(`http://localhost:4000/api/tasks/${taskId}`, {cache: 'no-store'});
+    const json = await data.json();
+    if (json.statusCode === 404) {
+      setTaskFetchError(true);
+      throw new Error(json.message);
+    } else {
       setTask(json);
       return json;
     }
+  }
 
-    // call the function
-    const result = fetchData()
-      // make sure to catch any error
-      .catch(console.error);
-  }, [])
+  const fetchMedicalRecords = async (taskId: string | string[] | undefined) => {
+    const data = await fetch(`http://localhost:4000/api/medical-records/task/${taskId}`, {cache: 'no-store'});
+    const json = await data.json();
+    if (json.statusCode === 404) {
+      setMedicalRecordsFetchError(true);
+      throw new Error(json.message);
+    } else {
+      setMedicalRecords(json);
+      return json;
+    }
+  }
 
   return (
     <>
-      {
-        !account && <ConnectWallet/>
-      }
+      {!account && <ConnectWallet/>}
       {
         account &&
           <>
@@ -36,7 +57,10 @@ const RewardTask = () => {
                   <Grid item lg={8}>
                       <Box className="content-part">
                         {
-                          task &&  <SendReward task={task}/>
+                          task && <SendReward task={task}/>
+                        }
+                        {
+                          taskFetchError && <p>Task not found!</p>
                         }
                       </Box>
                   </Grid>

@@ -21,7 +21,7 @@ interface ISendReward {
   task: ITask;
 }
 
-const SendReward:FC<ISendReward> = ({task}) => {
+const SendReward: FC<ISendReward> = ({task}) => {
   const [nearResponse, setNearResponse] = useState<INearResponse>({
     account_id: null,
     public_key: null,
@@ -75,6 +75,10 @@ const SendReward:FC<ISendReward> = ({task}) => {
     }
   }
 
+
+  const formatData = (date: string) => {
+    return new Date(date).toDateString();
+  }
   return (
     <>
       {
@@ -98,6 +102,12 @@ const SendReward:FC<ISendReward> = ({task}) => {
                   </div>
                   <div className="tasks-item">
                       <b>Patient: </b><span> {task.user.name}</span>
+                  </div>
+                  <div className="tasks-item">
+                      <b>Date Due: </b><span> {formatData(task.dateDue)} </span>
+                  </div>
+                  <div className="tasks-item">
+                      <b>Reward: </b><span> {task.taskType.reward} AID</span>
                   </div>
                   <div className="tasks-button-area">
                       <Button variant="contained" size={"large"} onClick={transfer}>Approve and send Aids</Button>
