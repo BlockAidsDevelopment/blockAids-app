@@ -1,11 +1,17 @@
-import {Injectable} from "@nestjs/common";
+import {Injectable, UnauthorizedException} from "@nestjs/common";
 import * as process from "process";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "../../users/entities/user.entity";
 
 const Arweave = require("arweave");
 const CryptoJS = require("crypto-js");
 
 @Injectable()
 export class ArweaveService {
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+  ) {}
   private initArweave() {
     return Arweave.init({
       host: "arweave.net",
@@ -16,21 +22,43 @@ export class ArweaveService {
     });
   }
 
-  async createOrUpdateMainJson(storedJsonLink, userId) {
-    let metadata = [];
-    if (1 !== 1) {
-      // user has main json
-      // get old data
-    } else {
-      metadata = [
-        {
+  async createOrUpdateMainJson(storedJsonLink: string, userId: string) {
+    try {
+      const foundUser = await this.userRepository.findOneOrFail({
+        where: { account_id: userId },
+      });
+      console.log(foundUser);
+
+      let metadata = [];
+      if (foundUser.ipfs_link) {
+        const result = await fetch(foundUser.ipfs_link).then((res) => res.json());
+        const oldJson = JSON.parse(JSON.stringify(result));
+        metadata = oldJson.concat({
           date: new Date(),
           link: storedJsonLink,
-        },
-      ];
-    }
+        });
+      } else {
+        metadata = [
+          {
+            date: new Date(),
+            link: storedJsonLink,
+          },
+        ];
+      }
 
-    return this.uploadJson(JSON.stringify(metadata));
+      const result = await this.uploadJson(JSON.stringify(metadata));
+
+      await this.userRepository.update(
+        { account_id: userId },
+        { ipfs_link: result.data.link },
+      );
+
+      return result;
+    } catch (e) {
+      throw new UnauthorizedException({
+        message: e.message,
+      });
+    }
   }
 
   async uploadJson(metadata: string) {
@@ -64,10 +92,7 @@ export class ArweaveService {
   getJsonByOnChainLink = async (link: string, userId: string) => {
     const result = await fetch(link).then((res) => res.json());
     const onChainResponse = JSON.parse(JSON.stringify(result));
-    const decryptedJson = this.getDecryptedJson(
-      onChainResponse.hash,
-      userId,
-    );
+    const decryptedJson = this.getDecryptedJson(onChainResponse.hash, userId);
     return {
       userId,
       metadata: JSON.parse(JSON.parse(decryptedJson)),
@@ -90,11 +115,11 @@ export class ArweaveService {
 
     const iv = CryptoJS.enc.Utf8.parse(cryptoIvKey);
 
-    return {key, iv};
+    return { key, iv };
   };
 
   createEncryptedJson = (text: string, id: string) => {
-    const {key, iv} = this.initEncryptionProcess(id);
+    const { key, iv } = this.initEncryptionProcess(id);
     const encrypted = CryptoJS.AES.encrypt(text, key, {
       iv: iv,
       mode: CryptoJS.mode.CBC,
@@ -103,11 +128,11 @@ export class ArweaveService {
   };
 
   getDecryptedJson = (hash: string, id: string) => {
-    const {key, iv} = this.initEncryptionProcess(id);
+    const { key, iv } = this.initEncryptionProcess(id);
     const decrypted = CryptoJS.AES.decrypt(
-      {ciphertext: CryptoJS.enc.Hex.parse(hash)},
+      { ciphertext: CryptoJS.enc.Hex.parse(hash) },
       key,
-      {iv: iv, mode: CryptoJS.mode.CBC},
+      { iv: iv, mode: CryptoJS.mode.CBC },
     );
     return decrypted.toString(CryptoJS.enc.Utf8);
   };

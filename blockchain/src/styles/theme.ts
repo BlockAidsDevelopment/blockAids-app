@@ -2,7 +2,7 @@ import {createTheme} from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
     primary: {
       main: '#13C2BD'
     }
@@ -15,7 +15,12 @@ const theme = createTheme({
     "fontWeightMedium": 500
   },
   components: {
-
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+        }
+      }
+    }
   },
 });
 

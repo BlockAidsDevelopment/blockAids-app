@@ -5,6 +5,12 @@ import {useSearchParams} from 'next/navigation'
 import {FC, useEffect, useState} from "react";
 import SuccessTransfer from "@/components/SuccessTransfer";
 import {ITask} from "@/models/ITask";
+import {IMedicalRecord} from "@/models/IMedicalRecord";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {red} from "@mui/material/colors";
 
 const BOATLOAD_OF_GAS = utils.format.parseNearAmount("0.00000000003")!;
 
@@ -19,9 +25,10 @@ interface INearResponse {
 
 interface ISendReward {
   task: ITask;
+  medicalRecords: IMedicalRecord[] | null | undefined;
 }
 
-const SendReward: FC<ISendReward> = ({task}) => {
+const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
   const [nearResponse, setNearResponse] = useState<INearResponse>({
     account_id: null,
     public_key: null,
@@ -32,6 +39,25 @@ const SendReward: FC<ISendReward> = ({task}) => {
   });
   const {wallet, account} = useNearStore();
   const searchParams = useSearchParams();
+  const [medicalRecordsJSON, setMedicalRecordsJSON] = useState<any>();
+
+  useEffect(() => {
+    if (medicalRecords) {
+      const recordsJson = medicalRecords.map(record => {
+        return {
+          id: record.id,
+          name: record.medicalRecordIndex.name,
+          value: record.value + " " + record.medicalRecordIndex.unit,
+          taskName: record.task.name,
+          taskLink: `${process.env.NEXT_PUBLIC_FRONT_URL}/tasks/view/${record.task.id}`,
+          specialist: `${record.specialist.name} (${record.specialist.accountId})`,
+          patient: `${record.user.name} (${record.user.accountId})`,
+          createdAt: record.created_at,
+        }
+      })
+      setMedicalRecordsJSON(JSON.stringify(recordsJson));
+    }
+  }, [medicalRecords])
 
   useEffect(() => {
     if (searchParams.get('transactionHashes')) {
@@ -48,6 +74,18 @@ const SendReward: FC<ISendReward> = ({task}) => {
 
   const transfer = async () => {
     if (wallet) {
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          json: medicalRecordsJSON,
+          userId: task.user.accountId,
+        })
+      };
+      const response = await fetch('http://localhost:4000/api/blockchain/store-json', requestOptions)
+      const responseJson = await response.json();
+      const arweaveLink = responseJson.mainJson.data.link
+
       const {formatNearAmount} = utils.format;
       const formattedAmount = formatNearAmount(task.taskType.reward.toString(), 9);
       const attachedDeposit = "1";
@@ -62,8 +100,7 @@ const SendReward: FC<ISendReward> = ({task}) => {
               args: {
                 "amount": task.taskType.reward.toString() + "000000000",
                 "receiver_id": task.user.accountId,
-                "memo": "Simple transfer",
-                "msg": "Simple message"
+                "msg": arweaveLink
               },
               gas: BOATLOAD_OF_GAS,
               deposit: attachedDeposit!,
@@ -107,6 +144,34 @@ const SendReward: FC<ISendReward> = ({task}) => {
                   <div className="tasks-item">
                       <b>Reward: </b><span> {task.taskType.reward} AID</span>
                   </div>
+
+                  <Accordion>
+                      <AccordionSummary
+                          expandIcon={<ExpandMoreIcon/>}
+                          aria-controls="panel1-content"
+                          id="panel1-header"
+                      >
+                          <h3> Medical Records:</h3>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        {
+                          medicalRecords?.map((record, index) => (
+                            <p key={index}>
+                              {
+                                record.medicalRecordIndex.name.length > 15 ?
+                                  <b>
+                                    {record.medicalRecordIndex.name.replace(/\b(\S{1,4})\S*/g, '$1').replace(/ /g, '. ')}:
+                                  </b> :
+                                  <span>
+                                    {record.medicalRecordIndex.name}:
+                                  </span>
+                              } {record.value}</p>
+                          ))
+                        }
+
+                      </AccordionDetails>
+                  </Accordion>
+
                   <div className="tasks-button-area">
                       <Button variant="contained" size={"large"} onClick={transfer}>Approve and send reward</Button>
                   </div>

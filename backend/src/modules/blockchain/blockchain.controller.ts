@@ -31,7 +31,7 @@ export class BlockchainController {
 
     return {
       mainJson: mainJsonLink,
-      itemJson: storedJson
+      itemJson: storedJson,
     };
   }
 

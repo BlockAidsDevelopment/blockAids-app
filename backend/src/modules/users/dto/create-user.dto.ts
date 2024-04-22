@@ -40,6 +40,15 @@ export class CreateUserDto {
   @IsNotEmpty()
   account_id: string;
 
+  @ApiProperty({
+    example: "https://arweave.net/8UKWANOtnPtnknmC3ae6UPin9qNPqU8FJ7Yq5Xn4bFU",
+    required: false,
+  })
+  @ValidateIf((o) => "ipfs_link" in o)
+  @IsString()
+  @IsNotEmpty()
+  ipfs_link: string;
+
   @ApiProperty({ example: "1990-07-10", required: false })
   @ValidateIf((o) => "birthdate" in o)
   @IsOptional()

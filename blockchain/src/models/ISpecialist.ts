@@ -5,5 +5,6 @@ export interface ISpecialist {
   "jobPosition": string,
   "avatar": string,
   "organizationId": string,
+  "accountId": string,
   "file"?: File | Blob,
 }

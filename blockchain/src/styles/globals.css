@@ -55,9 +55,11 @@ p {
             border-bottom: 1px solid #E4E5E7;
             padding: 15px;
         }
+
         .tasks-button-area {
             text-align: center;
             margin: 30px;
+
             button {
                 background-color: #13C2BD;
                 color: #FFF;
@@ -70,4 +72,28 @@ p {
     background-color: #D1FAF9;
     box-shadow: 0 8px 24px -4px rgba(173, 176, 184, 0.08), 0 6px 12px -6px rgba(173, 176, 184, 0.12);
     border-radius: 8px;
+}
+
+.MuiPaper-root {
+    background-color: transparent;
+    border: none;
+    box-shadow: 0 8px 24px -4px rgba(173, 176, 184, 0.08), 0 6px 12px -6px rgba(173, 176, 184, 0.12);
+    color: #FFF;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+    padding-bottom: 20px;
+
+    &:before{
+        height: 0;
+    }
+
+    h3 {
+        padding: 0;
+        margin-bottom: 0;
+    }
+}
+
+.MuiCollapse-root p {
+    display: flex;
+    justify-content: space-between;
 }

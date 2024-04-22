@@ -57,7 +57,7 @@ const RewardTask = () => {
                   <Grid item lg={8}>
                       <Box className="content-part">
                         {
-                          task && <SendReward task={task}/>
+                          task && <SendReward task={task} medicalRecords={medicalRecords}/>
                         }
                         {
                           taskFetchError && <p>Task not found!</p>

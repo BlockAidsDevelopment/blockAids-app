@@ -1,11 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsJSON, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateMetadataDto {
-  @ApiProperty({ example: `{ id: 10 }` })
+  @ApiProperty({
+    example: JSON.stringify(JSON.stringify({ id: "10", name: "John" })),
+  })
   @IsNotEmpty()
   @IsString()
-  json: string;
+  @IsJSON()
+  json: JSON;
 
   @ApiProperty({ example: "account.testnet" })
   @IsString()

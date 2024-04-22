@@ -73,6 +73,7 @@ export class AuthService {
           email: registerAuthDto.email,
           password: registerAuthDto.password,
           account_id: null,
+          ipfs_link: null,
           phone: null,
           birthdate: null,
           avatar: "avatar-mock.png",

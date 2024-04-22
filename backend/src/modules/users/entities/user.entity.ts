@@ -19,6 +19,9 @@ export class User {
   @Column({ type: "varchar", length: 100, nullable: true })
   account_id: string;
 
+  @Column({ type: "varchar", length: 100, nullable: true })
+  ipfs_link: string;
+
   @Column({ type: "date", nullable: true })
   birthdate: Date | null;
 
