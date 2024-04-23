@@ -10,16 +10,11 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {red} from "@mui/material/colors";
+import AddTaskIcon from '@mui/icons-material/AddTask';
 
 const BOATLOAD_OF_GAS = utils.format.parseNearAmount("0.00000000003")!;
 
 interface INearResponse {
-  account_id: string | null,
-  public_key: string | null,
-  all_keys: string | null,
-  errorCode: string | null,
-  errorMessage: string | null,
   transactionHashes: string | null,
 }
 
@@ -29,14 +24,7 @@ interface ISendReward {
 }
 
 const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
-  const [nearResponse, setNearResponse] = useState<INearResponse>({
-    account_id: null,
-    public_key: null,
-    all_keys: null,
-    errorCode: null,
-    errorMessage: null,
-    transactionHashes: null,
-  });
+  const [nearResponse, setNearResponse] = useState<INearResponse>({transactionHashes: null});
   const {wallet, account} = useNearStore();
   const searchParams = useSearchParams();
   const [medicalRecordsJSON, setMedicalRecordsJSON] = useState<any>();
@@ -62,11 +50,6 @@ const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
   useEffect(() => {
     if (searchParams.get('transactionHashes')) {
       setNearResponse({
-        account_id: searchParams.get('account_id'),
-        public_key: searchParams.get('public_key'),
-        all_keys: searchParams.get('all_keys'),
-        errorCode: searchParams.get('errorCode'),
-        errorMessage: searchParams.get('errorMessage'),
         transactionHashes: searchParams.get('transactionHashes'),
       })
     }
@@ -74,18 +57,21 @@ const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
 
   const transfer = async () => {
     if (wallet) {
-      const requestOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          json: medicalRecordsJSON,
-          userId: task.user.accountId,
-        })
-      };
-      const response = await fetch('http://localhost:4000/api/blockchain/store-json', requestOptions)
-      const responseJson = await response.json();
-      const arweaveLink = responseJson.mainJson.data.link
-
+      let arweaveLink = task.user.ipfs_link;
+      if (JSON.stringify(medicalRecordsJSON) !== "[]") {
+        const requestOptions = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            json: medicalRecordsJSON,
+            userId: task.user.accountId,
+          })
+        };
+        const response = await fetch('http://localhost:4000/api/blockchain/store-json', requestOptions)
+        const responseJson = await response.json();
+        arweaveLink = responseJson.mainJson.data.link
+        console.log(arweaveLink)
+      }
       const {formatNearAmount} = utils.format;
       const formattedAmount = formatNearAmount(task.taskType.reward.toString(), 9);
       const attachedDeposit = "1";
@@ -114,10 +100,12 @@ const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
   const formatData = (date: string) => {
     return new Date(date).toDateString();
   }
+
   return (
     <>
       {
-        nearResponse.transactionHashes && <SuccessTransfer transactionHashes={nearResponse.transactionHashes}/>
+        nearResponse.transactionHashes &&
+          <SuccessTransfer transactionHashes={nearResponse.transactionHashes} task={task}/>
       }
       {
         !nearResponse.transactionHashes && <div className="rewards-section">
@@ -144,36 +132,40 @@ const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
                   <div className="tasks-item">
                       <b>Reward: </b><span> {task.taskType.reward} AID</span>
                   </div>
-
-                  <Accordion>
-                      <AccordionSummary
-                          expandIcon={<ExpandMoreIcon/>}
-                          aria-controls="panel1-content"
-                          id="panel1-header"
-                      >
-                          <h3> Medical Records:</h3>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {
-                          medicalRecords?.map((record, index) => (
-                            <p key={index}>
-                              {
-                                record.medicalRecordIndex.name.length > 15 ?
-                                  <b>
-                                    {record.medicalRecordIndex.name.replace(/\b(\S{1,4})\S*/g, '$1').replace(/ /g, '. ')}:
-                                  </b> :
-                                  <span>
+                {
+                  medicalRecords && medicalRecords?.length > 0 &&
+                    <Accordion>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon/>}
+                            aria-controls="panel1-content"
+                            id="panel1-header"
+                        >
+                            <h3> Medical Records:</h3>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          {
+                            medicalRecords?.map((record, index) => (
+                              <p key={index}>
+                                {
+                                  record.medicalRecordIndex.name.length > 15 ?
+                                    <b>
+                                      {record.medicalRecordIndex.name.replace(/\b(\S{1,4})\S*/g, '$1').replace(/ /g, '. ')}:
+                                    </b> :
+                                    <span>
                                     {record.medicalRecordIndex.name}:
                                   </span>
-                              } {record.value}</p>
-                          ))
-                        }
+                                } {record.value}</p>
+                            ))
+                          }
 
-                      </AccordionDetails>
-                  </Accordion>
-
+                        </AccordionDetails>
+                    </Accordion>
+                }
                   <div className="tasks-button-area">
-                      <Button variant="contained" size={"large"} onClick={transfer}>Approve and send reward</Button>
+                      <Button variant="contained" size={"large"} onClick={transfer} className="button-main">
+                          <AddTaskIcon/>
+                          Approve and send reward
+                      </Button>
                   </div>
               </div>
           </div>
@@ -181,5 +173,4 @@ const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
     </>
   )
 }
-
 export default SendReward;

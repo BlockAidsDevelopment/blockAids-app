@@ -9,12 +9,17 @@ import "@near-wallet-selector/modal-ui/styles.css"
 
 const App = ({Component, pageProps}: AppProps) => {
   return (
+    <>
+
+
       <ThemeProvider theme={theme}>
+        <NabBar/>
         <Container maxWidth="xl">
-          <NabBar/>
           <Component {...pageProps} />
         </Container>
       </ThemeProvider>
+    </>
+
   )
 }
 

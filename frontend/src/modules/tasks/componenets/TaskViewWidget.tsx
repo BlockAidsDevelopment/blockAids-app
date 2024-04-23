@@ -6,19 +6,20 @@ import organizationIcon from '../assets/organizationIcon.svg';
 import calendarIcon from '../assets/calendarIcon.svg';
 import statusIcon from '../assets/statusIcon.svg';
 import MyButton from "../../../ui/MyButton";
-import {Link, useParams} from "react-router-dom";
-import {TasksList} from "../index";
-import {tasksApi} from "../../../api/tasksApi";
+import {Link} from "react-router-dom";
 import {TaskStatusesEnum} from "../enums/TaskStatusesEnum";
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import TaskReward from "./TaskReward";
 import {ITask} from "../../../models/ITask";
+import {useAppSelector} from "../../../hooks/redux";
 
 interface ITaskViewWidgetProps {
   task: ITask;
 }
 
 const TaskViewWidget: FC<ITaskViewWidgetProps> = ({task}) => {
+  const {type} = useAppSelector(state => state.authReducer);
+
   return (
     <>
       <h1>{task.name}</h1>
@@ -102,7 +103,26 @@ const TaskViewWidget: FC<ITaskViewWidgetProps> = ({task}) => {
           </Link>
         </Grid>
         <Grid item sm={6} xs={6}>
-          <TaskReward task={task} user={task.user}/>
+          {
+            type === "specialist" &&
+              <>
+                {
+                  task.user.allowed && <TaskReward task={task} user={task.user}/>
+                }
+              </>
+          }
+          {
+            !task.user.allowed &&
+              <p className="text-danger">
+                  * This patient was not moderated yet!
+              </p>
+          }
+          {
+            !task.specialist.allowed &&
+              <p className="text-danger">
+                  * This specialist was not moderated yet!
+              </p>
+          }
         </Grid>
       </Grid>
 

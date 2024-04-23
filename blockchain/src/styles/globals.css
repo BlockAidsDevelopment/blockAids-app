@@ -5,17 +5,42 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #F6FEFE;
+    background-color: #e8fcfc;
 }
 
 * {
+    transition: all 0.2s ease-in-out;
+}
+
+p, h1, h2, h3, h4, h5, h6, b, span, i {
     color: #010101;
+}
+
+.relative-area {
+    position: relative;
 }
 
 .nav-bar {
     text-align: center;
-    padding: 25px;
+    padding: 15px;
     margin-bottom: 20px;
+    box-shadow: 0 8px 24px -4px rgba(173, 176, 184, 0.08), 0 6px 12px -6px rgba(173, 176, 184, 0.12);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #74F1EE;
+
+    .back-area {
+        position: absolute;
+        left: 0;
+        top: 5px;
+    }
+
+    .links-area {
+        position: absolute;
+        right: 0;
+        top: 5px;
+    }
 
     img {
         max-width: 300px;
@@ -25,6 +50,7 @@ body {
 .connect-wallet-section {
     text-align: center;
     padding: 2rem;
+
 }
 
 h2 {
@@ -83,7 +109,7 @@ p {
     margin-bottom: 50px !important;
     padding-bottom: 20px;
 
-    &:before{
+    &:before {
         height: 0;
     }
 
@@ -96,4 +122,60 @@ p {
 .MuiCollapse-root p {
     display: flex;
     justify-content: space-between;
+}
+
+.button-main {
+    color: #FFF;
+    font-family: "Satoshi-Bold", serif;
+    padding: 12px 30px;
+
+    svg {
+        margin-right: 15px;
+    }
+}
+
+.button-main-min {
+    color: #FFF;
+    font-family: "Satoshi-Bold", serif;
+    padding: 8px 16px;
+
+    svg {
+        margin-right: 8px;
+    }
+}
+
+.text-green {
+    color: #13C2BD;
+}
+
+.divider {
+    height: 2rem;
+}
+
+.home-page {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main-link {
+    font-size: 20px;
+    font-family: 'Satoshi-Bold', serif;
+    color: #0ba39e;
+    border-bottom: 2px solid #0ba39e;
+    text-decoration: none;
+
+    &:hover {
+        border-bottom: none;
+    }
+}
+
+
+.json-area {
+    background-color: #FFF;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 30px;
 }

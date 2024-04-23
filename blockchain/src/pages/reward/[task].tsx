@@ -12,7 +12,7 @@ const RewardTask = () => {
   const {account} = useNearStore();
   const [task, setTask] = useState<ITask | null>();
   const [taskFetchError, setTaskFetchError] = useState<boolean>(false);
-  const [medicalRecords, setMedicalRecords] = useState<IMedicalRecord | null>();
+  const [medicalRecords, setMedicalRecords] = useState<IMedicalRecord[] | null | undefined>();
   const [medicalRecordsFetchError, setMedicalRecordsFetchError] = useState<boolean>(false);
 
   useEffect(() => {

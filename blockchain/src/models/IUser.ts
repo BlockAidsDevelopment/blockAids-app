@@ -4,6 +4,7 @@ export interface IUser {
   "email": string,
   "phone": string,
   "accountId": string,
+  "ipfs_link": string,
   "avatar": string,
   "gender": string,
   "birthdate"?: string | null,

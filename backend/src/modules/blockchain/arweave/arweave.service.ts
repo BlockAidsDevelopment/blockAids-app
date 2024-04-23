@@ -93,6 +93,7 @@ export class ArweaveService {
     const result = await fetch(link).then((res) => res.json());
     const onChainResponse = JSON.parse(JSON.stringify(result));
     const decryptedJson = this.getDecryptedJson(onChainResponse.hash, userId);
+
     return {
       userId,
       metadata: JSON.parse(JSON.parse(decryptedJson)),

@@ -80,13 +80,18 @@ const TasksList: FC<ITasksList> = (props) => {
             : <p style={{textAlign: 'center'}}>There is not any tasks, create the first one</p>
         }
       </div>
-      <div className="task-options">
+      <div className="task-options" style={{display: 'flex', justifyContent: "space-between", alignItems: "center"}}>
         <Link to="/tasks/create" style={{display: 'inline-block'}}>
           <button className="add-new-task-btn">
             <i className="icon"></i>
             Add new task
           </button>
         </Link>
+        <a href="http://localhost:3000/medical-records" style={{display: 'inline-block', marginLeft: '20px', marginTop: '-30px'}}>
+          <button className="add-new-task-btn">
+            Check medical records
+          </button>
+        </a>
         <MobileView>
           <TasksCalendar/>
         </MobileView>

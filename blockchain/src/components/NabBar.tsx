@@ -1,9 +1,30 @@
+import {Container, Button} from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import Link from 'next/link'
+
 const NabBar = () => {
   return (
     <div className="nav-bar">
-      <a href="#">
-        <img src="/images/logo.svg" alt=""/>
-      </a>
+      <Container maxWidth="xl" className="relative-area">
+        <div className="back-area">
+          <a href="http://localhost:3001">
+            <Button size={"large"}>
+              <ArrowBackIosIcon sx={{color: "#15c2bd"}}/>
+              Back
+            </Button>
+          </a>
+        </div>
+        <Link href="/">
+          <img src="/images/logo.svg" alt=""/>
+        </Link>
+        <div className="links-area">
+          <Link href="/medical-records">
+            <Button size={"large"} variant={"outlined"}>
+              Check medical records
+            </Button>
+          </Link>
+        </div>
+      </Container>
     </div>
   )
 }

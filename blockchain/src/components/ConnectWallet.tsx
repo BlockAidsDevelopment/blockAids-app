@@ -3,6 +3,8 @@ import {useEffect} from "react";
 import {setupModal} from "@near-wallet-selector/modal-ui";
 import {setupWallet} from "@/helpers/setupWallet";
 import useNearStore from "@/stories/useNearStore";
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const ConnectWallet = () => {
   const {wallet, account, modal, setSelector, setWallet, setAccount, setModal} = useNearStore();
@@ -47,12 +49,23 @@ const ConnectWallet = () => {
   return (
     <div className="connect-wallet-section">
       {
-        !account && <Button variant="outlined" size={"large"} onClick={signUp}>Connect Wallet</Button>
+        !account &&
+          <Button variant="contained" size={"large"} onClick={signUp} className="button-main">
+              <AccountBalanceWalletIcon/>
+              Connect Your Wallet
+          </Button>
       }
       {
-        account && <><Button variant="outlined" size={"large"} onClick={signOut}>Sign Out</Button>
-              <p>blockaids_dev.testnet</p>
-          </>
+        account &&
+          <div>
+              <p className="text-green_">blockaids_dev.testnet</p>
+              <div className="divider"></div>
+              <Button variant="contained" size={"large"} onClick={signOut} className="button-main-min">
+                  <LogoutIcon/>
+                  Sign Out
+              </Button>
+
+          </div>
       }
     </div>
   )

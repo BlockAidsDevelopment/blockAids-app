@@ -4,9 +4,8 @@ import {TasksList, TaskViewWidget} from "../modules/tasks";
 import {useParams} from "react-router-dom";
 import {tasksApi} from "../api/tasksApi";
 import {Grid} from "@mui/material";
-import {MedicalRecordsCreate, MedicalRecordsList} from "../modules/medicalRecords";
+import {MedicalRecordsList} from "../modules/medicalRecords";
 import {medicalRecordsApi} from "../api/medicalRecordsApi";
-import MyModal from "../ui/MyModal";
 
 const breadcrumbs: IBreadcrumb[] = [
   {
@@ -56,7 +55,7 @@ const TaskView: FC = () => {
         </Grid>
       </Grid>
       <Grid item md={12} xs={12} style={{marginBottom: '25px'}}>
-          <TasksList heading="Tasks"></TasksList>
+        <TasksList heading="Tasks"></TasksList>
       </Grid>
     </div>
   );

@@ -4,9 +4,11 @@ import {useEffect, useState} from "react";
 import {useSearchParams} from 'next/navigation'
 import useNearStore from "@/stories/useNearStore";
 import Button from "@mui/material/Button";
-import {use} from "h3";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ApprovalIcon from '@mui/icons-material/Approval';
 
 const Home = () => {
+  const [readyToAddAccount, setReadyToAddAccount] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const {account} = useNearStore();
   const [userData, setUserData] = useState<any>({
@@ -20,6 +22,7 @@ const Home = () => {
   useEffect(() => {
     const moderate = searchParams.get('moderate');
     if (moderate) {
+      setReadyToAddAccount(true);
       const moderateString = atob(moderate);
       const [email, id, type] = moderateString.split('|');
       setUserData({email, id, type});
@@ -52,7 +55,7 @@ const Home = () => {
       }
 
       if (response.status === 200) {
-        return setSuccess("Good, you've applied successfully for moderation!");
+        return setSuccess("You've applied successfully for moderation!");
       }
 
     } catch (error) {
@@ -60,27 +63,38 @@ const Home = () => {
     }
   };
 
-
   return (
     <div className="home-page">
       <ConnectWallet/>
-      <div style={{textAlign: "center"}}>
-        {
-          !success &&
-            <>
-              {
-                account &&
-                  <Button variant={"contained"} onClick={saveAccountId}>Add your account id</Button>
-              }
-            </>
-        }
-        {
-          success && <>
-                <p>{success}</p>
-                <a href="http://localhost:3001">go back</a>
-            </>
-        }
-      </div>
+      <div className="divider"></div>
+      {
+        readyToAddAccount && <div style={{textAlign: "center"}}>
+          {
+            !success &&
+              <>
+                {
+                  account &&
+                    <div>
+                        <p>Add Wallet ID and apply for moderation</p>
+                        <Button variant={"contained"} onClick={saveAccountId} className="button-main">
+                            <ApprovalIcon/>
+                            apply now
+                        </Button>
+                    </div>
+                }
+              </>
+          }
+          {
+            success && <>
+                  <p>{success}</p>
+                  <a href="http://localhost:3001">
+                      <Button><ArrowBackIosIcon/> go back</Button>
+                  </a>
+              </>
+          }
+          </div>
+      }
+
     </div>
   )
 }
