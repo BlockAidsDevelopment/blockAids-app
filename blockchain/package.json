@@ -34,7 +34,8 @@
     "next": "13.3.0",
     "react": "^18",
     "react-dom": "^18",
-    "zustand": "^3.6.9"
+    "zustand": "^3.6.9",
+    "uri-template": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",

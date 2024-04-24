@@ -19,9 +19,7 @@ const MedicalRecords: FC = () => {
   return (
     <div className="medical-records-page">
       <Breadcrumbs breadcrumbs={breadcrumbs}/>
-      <div className="medical-records-add-btn">
-        {/*<MedicalRecordsCreate/>*/}
-      </div>
+      <div className="medical-records-add-btn"></div>
       <MedicalRecordsWidget/>
     </div>
   )

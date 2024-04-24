@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {medicalRecordsApi} from "../../../api/medicalRecordsApi";
-import MedicalRecordsList from "./MedicalRecordsList";
 import {useAppSelector} from "../../../hooks/redux";
+import MedicalRecordsListGrouped from "./MedicalRecordsListGrouped";
 
 const MedicalRecordsWidget: FC = () => {
   const {type, authUser} = useAppSelector(state => state.authReducer);
@@ -17,7 +17,7 @@ const MedicalRecordsWidget: FC = () => {
     <div className="tasks-area">
       <div className="task-create-area medical-records-area">
         <h1>Medical Records</h1>
-        <MedicalRecordsList medicalRecords={medicalRecords} isVisibleDetails={true}/>
+        <MedicalRecordsListGrouped medicalRecords={medicalRecords} isVisibleDetails={true}/>
       </div>
     </div>
   )
