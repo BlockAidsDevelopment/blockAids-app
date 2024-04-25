@@ -3,6 +3,7 @@ import * as process from "process";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "../../users/entities/user.entity";
+const fetch = require('node-fetch');
 
 const Arweave = require("arweave");
 const CryptoJS = require("crypto-js");
