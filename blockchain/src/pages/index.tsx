@@ -6,6 +6,7 @@ import useNearStore from "@/stories/useNearStore";
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ApprovalIcon from '@mui/icons-material/Approval';
+import Loader from "@/components/Loader";
 
 const Home = () => {
   const [readyToAddAccount, setReadyToAddAccount] = useState<boolean>(false);
@@ -18,6 +19,7 @@ const Home = () => {
   })
   const [error, setError] = useState<any>(null);
   const [success, setSuccess] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const moderate = searchParams.get('moderate');
@@ -30,6 +32,7 @@ const Home = () => {
   }, [searchParams]);
 
   const saveAccountId = async () => {
+    setLoading(true);
     let backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/specialists/${userData.id}`
 
     if (userData.type === "user") {
@@ -50,16 +53,16 @@ const Home = () => {
         }
       );
 
-      if (response.status >= 400) {
-        return setError("There is an error, try latter please.");
-      }
-
       if (response.status === 200) {
-        setSuccess("You've applied successfully for moderation!");
+        window.location.href = 'https://app.next.fractal.id/authorize?client_id=PZP8B8T6QepdoUbcJQiTdW9qtmwHZPt6f2hbQ490toM&redirect_uri=https%3A%2F%2Fwallet.blockaids.online%2Ffractal%2Fcb&response_type=code&scope=contact%3Aread%20verification.basic%3Aread%20verification.basic.details%3Aread%20verification.liveness%3Aread%20verification.liveness.details%3Aread'
+        return setLoading(false);
+        // setSuccess("You've applied successfully for moderation!");
       }
 
-      window.location.href = 'https://app.next.fractal.id/authorize?client_id=PZP8B8T6QepdoUbcJQiTdW9qtmwHZPt6f2hbQ490toM&redirect_uri=https%3A%2F%2Fwallet.blockaids.online%2Ffractal%2Fcb&response_type=code&scope=contact%3Aread%20verification.basic%3Aread%20verification.basic.details%3Aread%20verification.liveness%3Aread%20verification.liveness.details%3Aread'
+      setError("There is an error, try latter please.");
+      return setLoading(false);
     } catch (error) {
+      setLoading(false);
       return setError("There is an error, try latter please.");
     }
   };
@@ -67,6 +70,9 @@ const Home = () => {
   return (
     <div className="home-page">
       <ConnectWallet/>
+      {
+        loading && <Loader/>
+      }
       <div className="divider"></div>
       {
         readyToAddAccount && <div style={{textAlign: "center"}}>

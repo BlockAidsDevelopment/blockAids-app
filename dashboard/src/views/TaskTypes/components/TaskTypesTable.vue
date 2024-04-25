@@ -27,7 +27,7 @@
               <span class="text-secondary text-sm">{{ taskType.name }}</span>
             </td>
             <td class="align-middle ps-4">
-              <span class="text-secondary text-xs font-weight-bold">{{ taskType.reward }} SOL</span>
+              <span class="text-secondary text-xs font-weight-bold">{{ taskType.reward }} AID</span>
             </td>
             <td class="align-middle">
               <router-link

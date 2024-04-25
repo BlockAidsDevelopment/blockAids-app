@@ -45,7 +45,9 @@ const MedicalRecordsItem: FC<IMedicalRecordsUpdateItemIProps> = ({record, isVisi
               <b>
                 {record.medicalRecordIndex.name}:
               </b>
-          } {record.value}</p>
+          } {record.value}
+          <i style={{fontSize: "12px"}}> {record.medicalRecordIndex.unit !== "-" ? record.medicalRecordIndex.unit : ''}</i>
+        </p>
         {/*<p><small>{moment(record.created_at).fromNow()}</small></p>*/}
         <p><small>{moment(record.created_at).format("MMMM Do YYYY, h:mm:ss a")}</small></p>
       </section>

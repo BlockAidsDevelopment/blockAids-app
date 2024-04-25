@@ -11,6 +11,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddTaskIcon from '@mui/icons-material/AddTask';
+import Loader from "@/components/Loader";
 
 const BOATLOAD_OF_GAS = utils.format.parseNearAmount("0.00000000003")!;
 
@@ -28,6 +29,7 @@ const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
   const {wallet, account} = useNearStore();
   const searchParams = useSearchParams();
   const [medicalRecordsJSON, setMedicalRecordsJSON] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (medicalRecords) {
@@ -57,6 +59,7 @@ const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
 
   const transfer = async () => {
     if (wallet) {
+      setLoading(true);
       let arweaveLink = task.user.ipfs_link;
       if (JSON.stringify(medicalRecordsJSON) !== "[]") {
         const requestOptions = {
@@ -94,6 +97,7 @@ const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
           },
         ],
       })
+      setLoading(false);
     }
   }
 
@@ -103,6 +107,9 @@ const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
 
   return (
     <>
+      {
+        loading && <Loader/>
+      }
       {
         nearResponse.transactionHashes &&
           <SuccessTransfer transactionHashes={nearResponse.transactionHashes} task={task}/>
