@@ -9,7 +9,7 @@ const prefs = {
   client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET ?? "",
 
   scope: "contact:read verification.basic:read verification.basic.details:read verification.liveness:read verification.liveness.details:read",
-  redirect_uri: "http://localhost:3000/fractal/cb",
+  redirect_uri: `${process.env.NEXT_PUBLIC_MAIN_URL}/fractal/cb`,
 };
 
 const loginTemplate = uritemplate.parse(

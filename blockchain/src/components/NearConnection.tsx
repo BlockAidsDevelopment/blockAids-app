@@ -49,25 +49,6 @@ const NearConnection = () => {
 
   const initContract = async () => {
     if (account) {
-//       console.log(Connection, keyStores, WalletConnection);
-//       // const {connect, keyStores, WalletConnection} = near;
-//
-//       // const connectionConfig = {
-//       //   networkId: "testnet",
-//       //   keyStore: new keyStores.BrowserLocalStorageKeyStore(),
-//       //   nodeUrl: "https://rpc.testnet.near.org",
-//       //   walletUrl: "https://testnet.mynearwallet.com/",
-//       //   helperUrl: "https://helper.testnet.near.org",
-//       //   explorerUrl: "https://testnet.nearblocks.io",
-//       // };
-//
-// // connect to NEAR
-// //       const nearConnection = await connect(connectionConfig);
-//
-//       // console.log(nearConnection);
-// // create wallet connection
-// //       const walletConnection = new WalletConnection(nearConnection);
-//       // const account1 = await near.account("example-account.testnet");
       const {formatNearAmount} = utils.format;
       // @ts-ignore
       // eslint-disable-next-line no-use-before-define

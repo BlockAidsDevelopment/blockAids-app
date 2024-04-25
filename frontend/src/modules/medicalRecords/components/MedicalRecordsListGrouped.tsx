@@ -11,35 +11,19 @@ interface IMedicalRecordsListProps {
   isVisibleDetails?: boolean;
 }
 
-
-
 const MedicalRecordsList: FC<IMedicalRecordsListProps> = ({medicalRecords, isVisibleDetails}) => {
   const [medicalRecordsGrouped, setMedicalRecordsGrouped] = useState<any>();
 
   useEffect(() => {
-    let groupedMedicalRecords = [];
     if (medicalRecords) {
-      for (let i = 0; i < medicalRecords.length; i++) {
-        if (!groupedMedicalRecords[medicalRecords[i].medicalRecordIndex.name]) {
-          groupedMedicalRecords[medicalRecords[i].medicalRecordIndex.name] = [];
-        }
+      let result = medicalRecords.reduce((x, y) => {
+        (x[y.medicalRecordIndex.name] = x[y.medicalRecordIndex.name] || []).push(y);
+        return x;
+      }, {});
 
-        groupedMedicalRecords[medicalRecords[i].medicalRecordIndex.name][medicalRecords[i].value] = medicalRecords[i];
-      }
+      result = Object.keys(result).map((key) => [key, result[key]]);
 
-      const result = Object.keys(groupedMedicalRecords).map((key) => [key, groupedMedicalRecords[key]]);
-
-      result.map(e => {
-        console.log(e[1])
-        // e[1].map(w => {
-        //   // console.log(w);
-        // })
-      })
-
-      console.log(result);
       setMedicalRecordsGrouped(result);
-
-      console.log(typeof groupedMedicalRecords)
     }
   }, [medicalRecords]);
 
@@ -49,36 +33,26 @@ const MedicalRecordsList: FC<IMedicalRecordsListProps> = ({medicalRecords, isVis
         medicalRecords && medicalRecords.length === 0 &&
           <div style={{textAlign: "center"}}>There is no any medical records yet</div>
       }
-      {/*{*/}
-      {/*  medicalRecords && medicalRecords.map(record => (*/}
-      {/*    <MedicalRecordsItem record={record} isVisibleDetails={isVisibleDetails}/>*/}
-      {/*  ))*/}
-      {/*}*/}
-
       {
         medicalRecordsGrouped && medicalRecordsGrouped.map(item => (
-          <Accordion>
+          <Accordion className="accordion-styled">
             <AccordionSummary
               expandIcon={<ExpandMoreIcon/>}
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              {item[0]}
+              <h6><b>{item[0]}</b></h6>
             </AccordionSummary>
             <AccordionDetails>
-              {JSON.stringify(item)}
-              {/*{*/}
-              {/*  item[1].map(record => (*/}
-              {/*    <MedicalRecordsItem record={record} isVisibleDetails={isVisibleDetails}/>*/}
-              {/*  ))*/}
-              {/*}*/}
+              {
+                item[1].map(record => (
+                  <MedicalRecordsItem record={record} isVisibleDetails={isVisibleDetails}/>
+                ))
+              }
             </AccordionDetails>
           </Accordion>
-
         ))
       }
-
-
     </>
   )
 }

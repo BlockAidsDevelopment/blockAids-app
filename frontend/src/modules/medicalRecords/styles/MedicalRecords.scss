@@ -171,6 +171,19 @@
       width: 260px;
     }
   }
-
-
 }
+
+.accordion-styled {
+  margin-bottom: 20px;
+  background-color: #E8FDFC !important;
+  border: 1px solid #74F1EE;
+
+  &:before {
+    border: none !important;
+  }
+
+  &:after {
+    border: none !important;
+  }
+}
+

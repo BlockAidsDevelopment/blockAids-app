@@ -17,7 +17,7 @@ const MedicalRecords = () => {
     setResponseJSON(null);
     try {
       const encodedURI = encodeURIComponent(arweaveLink ? arweaveLink : "");
-      const response = await fetch(`http://localhost:4000/api/blockchain/decrypted/${encodedURI}/${walletId}`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blockchain/decrypted/${encodedURI}/${walletId}`)
       const data = await response.json();
       console.log(response);
       if (response.status === 200) {

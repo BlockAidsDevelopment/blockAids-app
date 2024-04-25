@@ -87,7 +87,7 @@ const TasksList: FC<ITasksList> = (props) => {
             Add new task
           </button>
         </Link>
-        <a href="http://localhost:3000/medical-records" style={{display: 'inline-block', marginLeft: '20px', marginTop: '-30px'}}>
+        <a href={`${process.env.REACT_APP_BLOCKCHAIN_URL}/medical-records`} style={{display: 'inline-block', marginLeft: '20px', marginTop: '-30px'}}>
           <button className="add-new-task-btn">
             Check medical records
           </button>

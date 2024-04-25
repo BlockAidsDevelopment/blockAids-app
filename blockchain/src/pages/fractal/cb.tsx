@@ -34,7 +34,7 @@ const FractalCB = () => {
       <ConnectWallet/>
       <div className="divider"></div>
       <p>{"You've"} applied successfully for moderation!</p>
-      <a href="http://localhost:3001">
+      <a href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}>
         <Button><ArrowBackIosIcon/> go back</Button>
       </a>
     </div>

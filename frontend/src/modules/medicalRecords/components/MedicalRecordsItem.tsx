@@ -46,7 +46,8 @@ const MedicalRecordsItem: FC<IMedicalRecordsUpdateItemIProps> = ({record, isVisi
                 {record.medicalRecordIndex.name}:
               </b>
           } {record.value}</p>
-        <p><small>{moment(record.created_at).fromNow()}</small></p>
+        {/*<p><small>{moment(record.created_at).fromNow()}</small></p>*/}
+        <p><small>{moment(record.created_at).format("MMMM Do YYYY, h:mm:ss a")}</small></p>
       </section>
 
       {
@@ -73,7 +74,6 @@ const MedicalRecordsItem: FC<IMedicalRecordsUpdateItemIProps> = ({record, isVisi
               </section>
           </>
       }
-
 
       <section className="delete-section">
         <span onClick={toggleDisplayRemoveDialog}><DeleteIcon/></span>

@@ -24,7 +24,7 @@ const RewardTask = () => {
   }, [router.isReady])
 
   const fetchTask = async (taskId: string | string[] | undefined) => {
-    const data = await fetch(`http://localhost:4000/api/tasks/${taskId}`, {cache: 'no-store'});
+    const data = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks/${taskId}`, {cache: 'no-store'});
     const json = await data.json();
     if (json.statusCode === 404) {
       setTaskFetchError(true);
@@ -36,7 +36,7 @@ const RewardTask = () => {
   }
 
   const fetchMedicalRecords = async (taskId: string | string[] | undefined) => {
-    const data = await fetch(`http://localhost:4000/api/medical-records/task/${taskId}`, {cache: 'no-store'});
+    const data = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/medical-records/task/${taskId}`, {cache: 'no-store'});
     const json = await data.json();
     if (json.statusCode === 404) {
       setMedicalRecordsFetchError(true);

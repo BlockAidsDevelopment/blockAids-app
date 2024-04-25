@@ -67,7 +67,7 @@ const SendReward: FC<ISendReward> = ({task, medicalRecords}) => {
             userId: task.user.accountId,
           })
         };
-        const response = await fetch('http://localhost:4000/api/blockchain/store-json', requestOptions)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blockchain/store-json`, requestOptions)
         const responseJson = await response.json();
         arweaveLink = responseJson.mainJson.data.link
         console.log(arweaveLink)

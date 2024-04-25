@@ -30,10 +30,10 @@ const Home = () => {
   }, [searchParams]);
 
   const saveAccountId = async () => {
-    let backendUrl = `http://localhost:4000/api/specialists/${userData.id}`
+    let backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/specialists/${userData.id}`
 
     if (userData.type === "user") {
-      backendUrl = `http://localhost:4000/api/users/${userData.id}`
+      backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/${userData.id}`
     }
 
     const data = {email: userData.email, account_id: account?.accountId};
@@ -88,7 +88,7 @@ const Home = () => {
           {
             success && <>
                   <p>{success}</p>
-                  <a href="http://localhost:3001">
+                  <a href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}>
                       <Button><ArrowBackIosIcon/> go back</Button>
                   </a>
               </>

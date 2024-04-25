@@ -7,7 +7,7 @@ const NabBar = () => {
     <div className="nav-bar">
       <Container maxWidth="xl" className="relative-area">
         <div className="back-area">
-          <a href="http://localhost:3001">
+          <a href={`${process.env.NEXT_NEXT_PUBLIC_FRONTEND_URL}`}>
             <Button size={"large"}>
               <ArrowBackIosIcon sx={{color: "#15c2bd"}}/>
               Back
