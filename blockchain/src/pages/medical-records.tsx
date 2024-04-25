@@ -2,7 +2,7 @@ import ConnectWallet from "@/components/ConnectWallet";
 import {Box, Grid, TextField} from "@mui/material";
 import useNearStore from "@/stories/useNearStore";
 import Button from "@mui/material/Button";
-import {useState} from "react";
+import React, {useState} from "react";
 
 const MedicalRecords = () => {
   const {account} = useNearStore();
@@ -11,7 +11,7 @@ const MedicalRecords = () => {
   const [error, setError] = useState<boolean>(false);
   const [responseJSON, setResponseJSON] = useState<any>(null);
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(false);
     setResponseJSON(null);
@@ -50,7 +50,7 @@ const MedicalRecords = () => {
                                                      variant="standard"
                                                      required
                                                      value={arweaveLink}
-                                                     onInput={(e) => setArweaveLink(e.target.value)}
+                                                     onInput={(e: React.ChangeEvent<HTMLInputElement>) => setArweaveLink(e.target.value)}
                                                      style={{width: "90%"}}/>
                                       </Grid>
                                       <Grid item lg={6}>
@@ -58,7 +58,7 @@ const MedicalRecords = () => {
                                                      variant="standard"
                                                      required
                                                      value={walletId}
-                                                     onInput={(e) => setWalletId(e.target.value)}
+                                                     onInput={(e: React.ChangeEvent<HTMLInputElement>) => setWalletId(e.target.value)}
                                                      style={{width: "90%"}}/>
                                       </Grid>
                                       <Grid item lg={12}>
