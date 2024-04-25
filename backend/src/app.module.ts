@@ -24,7 +24,7 @@ import { MedicalRecordIndex } from "./modules/tasks/entities/medical-record-inde
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: "./.env",
+      envFilePath: "./.env.example",
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
