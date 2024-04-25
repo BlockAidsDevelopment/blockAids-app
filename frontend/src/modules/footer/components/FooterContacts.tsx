@@ -17,9 +17,9 @@ const FooterContacts: FC = () => {
         <a href="https://twitter.com" className="twitter item" target="_blank" rel="noreferrer">
           <img src="/images/socialMediaIcons/twitter.png" alt=""/>
         </a>
-        <a href="https://discord.com" className="discord item" target="_blank" rel="noreferrer">
-          <img src="/images/socialMediaIcons/discord.png" alt=""/>
-        </a>
+        {/*<a href="https://discord.com" className="discord item" target="_blank" rel="noreferrer">*/}
+        {/*  <img src="/images/socialMediaIcons/discord.png" alt=""/>*/}
+        {/*</a>*/}
       </div>
     </div>
   );

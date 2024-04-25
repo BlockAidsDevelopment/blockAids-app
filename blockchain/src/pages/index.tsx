@@ -58,7 +58,7 @@ const Home = () => {
         setSuccess("You've applied successfully for moderation!");
       }
 
-      window.location.href = 'https://app.next.fractal.id/authorize?client_id=PZP8B8T6QepdoUbcJQiTdW9qtmwHZPt6f2hbQ490toM&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Ffractal%2Fcb&response_type=code&scope=contact%3Aread%20verification.basic%3Aread%20verification.basic.details%3Aread%20verification.liveness%3Aread%20verification.liveness.details%3Aread\n'
+      window.location.href = 'https://app.next.fractal.id/authorize?client_id=PZP8B8T6QepdoUbcJQiTdW9qtmwHZPt6f2hbQ490toM&redirect_uri=https%3A%2F%2Fwallet.blockaids.online%2Ffractal%2Fcb&response_type=code&scope=contact%3Aread%20verification.basic%3Aread%20verification.basic.details%3Aread%20verification.liveness%3Aread%20verification.liveness.details%3Aread'
     } catch (error) {
       return setError("There is an error, try latter please.");
     }
