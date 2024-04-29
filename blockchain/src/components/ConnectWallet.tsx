@@ -18,7 +18,7 @@ const ConnectWallet = () => {
       const mySelector = await setupWallet();
       setSelector(mySelector);
       const modal = setupModal(mySelector, {
-        contractId: "block.blockaids_dev.testnet",
+        contractId: "token-aid.near",
         methodNames: ["ft_transfer"]
       });
       setModal(modal);
@@ -58,7 +58,7 @@ const ConnectWallet = () => {
       {
         account &&
           <div>
-              <p className="text-green_">blockaids_dev.testnet</p>
+              <p className="text-green_">{account.accountId}</p>
               <div className="divider"></div>
               <Button variant="contained" size={"large"} onClick={signOut} className="button-main-min">
                   <LogoutIcon/>

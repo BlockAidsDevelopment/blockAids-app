@@ -10,7 +10,7 @@ import { setupNearFi } from "@near-wallet-selector/nearfi";
 import { setupCoin98Wallet } from "@near-wallet-selector/coin98-wallet";
 export const setupWallet = () => {
   return setupWalletSelector({
-    network: "testnet",
+    network: "mainnet",
     modules: [
       setupMyNearWallet(),
       setupSender(),

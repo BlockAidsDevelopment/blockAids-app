@@ -29,7 +29,7 @@ const SuccessTransfer:FC<ISuccessTransfer> = ({transactionHashes, task}) => {
       <div className="rewards-section">
         <h2>Success!</h2>
         <p>Transaction was sent!</p>
-        <p><a href={`https://testnet.nearblocks.io/txns/${transactionHashes}`} target="_blank" className="main-link">View transaction details</a></p>
+        <p><a href={`https://nearblocks.io/txns/${transactionHashes}`} target="_blank" className="main-link">View transaction details</a></p>
         <br/><br/>
         <a href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}>
           <Button variant={"contained"} size={"large"} className="button-main-min">
